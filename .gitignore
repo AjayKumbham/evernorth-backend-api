@@ -1,0 +1,47 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+
+# Maven target directory
+target/
+
+# Gradle build directories
+.gradle/
+build/
+
+# Eclipse and IntelliJ IDEA project files
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+*.iws
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Environment and properties files (if sensitive)
+*.env
+*.properties
+!src/main/resources/application.properties
+!src/main/resources/application.yml
+
+# Database and cache files
+*.db
+*.cache
+
+# Lombok generated files
+.lombok/
+
+# Node modules (if frontend is included in the backend repo)
+node_modules/
+
+# Docker and Kubernetes files
+*.dockerignore
+docker-compose.override.yml
