@@ -852,7 +852,7 @@ GET /api/users/health-records
 
 **Request Example:**
 ```
-GET http:/api/users/health-records
+GET /api/users/health-records
 Host: localhost:8080
 Authorization: Bearer <token>
 ```
