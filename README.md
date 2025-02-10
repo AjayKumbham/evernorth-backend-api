@@ -657,37 +657,37 @@ The Address API allows users to store, retrieve, update, and remove addresses as
 
 Users can add new addresses, fetch their saved addresses, modify existing ones, or delete them when no longer needed. Each operation requires authentication via a Bearer token, and the API returns appropriate HTTP status codes to indicate the success or failure of the request.
 
-### 1.Get User Addresses
 
-#### Endpoint
+### Authentication
+All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
 
+### Authorization Header Example
 ```http
-GET /api/users/address
+Authorization: Bearer <token>
 ```
 
-#### Description
-
-Retrieves the list of saved addresses for the authenticated user.
-
-#### Authorization
-
-Bearer Token authentication is required.
+### Common Address Fields:
+- **addressLabel** (string) - A label for the address (e.g., "Home", "Work"). *(Required)*
+- **addressLine1** (string) - Primary address line (e.g., street name, house number). *(Required)*
+- **addressLine2** (string) - Additional address details (e.g., apartment number, landmark). *(Optional)*
+- **city** (string) - Name of the city. *(Required)*
+- **state** (string) - Name of the state. *(Required for POST requests)*
+- **zipCode** (string) - Postal code of the address. *(Required)*
+- **landmark** (string) - Nearby landmark for easier identification. *(Optional)*
 
 ---
 
-#### Example Request
+### Endpoints
 
-```http
-GET /api/users/addresses HTTP/1.1
+#### 1. Get All Addresses
+**Request:**
+```
+GET /api/users/addresses
 Host: localhost:8080
 Authorization: Bearer <token>
 ```
 
----
-
-#### Example Response
-
-**Response Body:**
+**Response:**
 ```json
 [
     {
@@ -704,14 +704,99 @@ Authorization: Bearer <token>
 
 ---
 
-#### Response Codes
+#### 2. Add a New Address
+**Request:**
+```
+POST /api/users/addresses
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
+```
 
-- **200 OK** – Addresses retrieved successfully.
-- **401 Unauthorized** – Invalid or missing token.
+**Body:**
+```json
+{
+    "addressLabel": "Home",
+    "addressLine1": "123 Main St",
+    "addressLine2": "Apt 4B",
+    "city": "New York",
+    "state": "NY",
+    "zipCode": "10001",
+    "landmark": "Near Central Park"
+}
+```
+
+**Response:**
+```json
+{
+    "addressLabel": "Home",
+    "addressLine1": "123 Main St",
+    "addressLine2": "Apt 4B",
+    "city": "New York",
+    "state": "NY",
+    "zipCode": "10001",
+    "landmark": "Near Central Park"
+}
+```
 
 ---
 
+#### 3. Update an Existing Address
+**Request:**
+```
+PUT /api/users/addresses/{addressLabel}
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
+```
 
+**Body:**
+```json
+{
+    "addressLabel": "Home",
+    "addressLine1": "123 Main St",
+    "addressLine2": "Apt 4B",
+    "city": "Hyderabad",
+    "zipCode": "10001",
+    "landmark": "Near Central Vista"
+}
+```
+
+**Response:**
+```json
+{
+    "addressLabel": "Home",
+    "addressLine1": "123 Main St",
+    "addressLine2": "Apt 4B",
+    "city": "Hyderabad",
+    "state": "NY",
+    "zipCode": "10001",
+    "landmark": "Near Central Vista"
+}
+```
+
+---
+
+#### 4. Delete an Address
+**Request:**
+```
+DELETE /api/users/addresses/{addressLabel}
+Host: localhost:8080
+Authorization: Bearer <token>
+```
+
+**Response:**
+```
+200 OK (No response body)
+```
+
+---
+
+#### Notes:
+- Ensure all required fields are provided in the request body.
+- **addressLine2** and **landmark** are optional fields and can be omitted.
+- **State** is required for POST requests but may be optional for updates.
+- The API uses **addressLabel** as a unique identifier for updating and deleting addresses.
 
 
 
