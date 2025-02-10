@@ -691,7 +691,8 @@ GET /api/users/addresses
 
 **Request Example:**
 ```
-GET http://localhost:8080/api/users/addresses
+GET /api/users/addresses
+Host: localhost:8080
 Authorization: Bearer <token>
 ```
 
@@ -721,7 +722,8 @@ POST /api/users/addresses
 
 **Request Example:**
 ```
-POST http://localhost:8080/api/users/addresses
+POST /api/users/addresses/home
+Host:localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
 ```
@@ -762,7 +764,8 @@ PUT /api/users/addresses/{addressLabel}
 
 **Request Example:**
 ```
-PUT http://localhost:8080/api/users/addresses/home
+PUT /api/users/addresses/home
+Host:localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
 ```
@@ -798,7 +801,8 @@ DELETE /api/users/addresses/{addressLabel}
 
 **Request Example:**
 ```
-DELETE http://localhost:8080/api/users/addresses/Home
+DELETE /api/users/addresses/Home
+Host: localhost:8080
 Authorization: Bearer <token>
 ```
 
