@@ -819,5 +819,149 @@ Authorization: Bearer <token>
 - `addressLabel` should be unique per user.
 
 ---
+## Health Conditions API
+
+The Health Conditions API provides endpoints to manage user health records, including retrieving, adding, updating, and deleting health conditions.
+
+### Authentication
+All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
+
+### Authorization Header Example
+```http
+Authorization: Bearer <token>
+```
+---
+
+## Request Parameters
+| Parameter         | Type   | Required | Description |
+|------------------|--------|----------|-------------|
+| `recordNo`       | Integer | Yes      | Unique identifier for the health record. |
+| `healthCondition` | String | Yes      | Name of the health condition. |
+| `description`     | String | No       | Additional details about the condition (optional). |
+
+---
+
+## Endpoints
+
+### 1. Get All Health Records
+**Endpoint:**
+```
+GET /api/users/health-records
+```
+**Description:** Retrieves a list of all saved health records for the authenticated user.
+
+**Request Example:**
+```
+GET http:/api/users/health-records
+Host: localhost:8080
+Authorization: Bearer <token>
+```
+
+**Response Example:**
+```json
+[
+    {
+        "recordNo": 1,
+        "healthCondition": "Diabetes Type 2",
+        "description": "Diagnosed in 2020, under medication"
+    }
+]
+```
+
+---
+
+### 2. Add a New Health Record
+**Endpoint:**
+```
+POST /api/users/health-records
+```
+**Description:** Adds a new health record for the authenticated user. The `description` field is optional.
+
+**Request Example:**
+```
+POST /api/users/health-records
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+**Request Body:**
+```json
+{
+    "healthCondition": "Diabetes Type 2",
+    "description": "Diagnosed in 2020, under medication"
+}
+```
+
+**Response Example:**
+```json
+{
+    "recordNo": 1,
+    "healthCondition": "Diabetes Type 2",
+    "description": "Diagnosed in 2020, under medication"
+}
+```
+
+---
+
+### 3. Update a Health Record
+**Endpoint:**
+```
+PUT /api/users/health-records/{recordNo}
+```
+**Description:** Updates an existing health record identified by `recordNo`. All fields are optional; only include the fields that need to be updated.
+
+**Request Example:**
+```
+PUT /api/users/health-records/1
+Host: localhost:8080 
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+**Request Body (Example - Updating Health Condition and Description):**
+```json
+{
+    "healthCondition": "Type 1 Diabetes",
+    "description": "Type 1 diabetes with regular medication"
+}
+```
+
+**Response Example:**
+```json
+{
+    "recordNo": 1,
+    "healthCondition": "Type 1 Diabetes",
+    "description": "Type 1 diabetes with regular medication"
+}
+```
+
+---
+
+### 4. Delete a Health Record
+**Endpoint:**
+```
+DELETE /api/users/health-records/{recordNo}
+```
+**Description:** Deletes a health record associated with the given `recordNo`.
+
+**Request Example:**
+```
+DELETE /api/users/health-records/1
+Host: localhost:8080
+Authorization: Bearer <token>
+```
+
+**Response:**
+- **Status:** `200 OK`
+- **Body:** No response body.
+
+
+
+## Notes
+- All requests require authentication using a Bearer Token.
+- For updating a health record, only include fields that need to be changed.
+- The `description` field is optional across all requests.
+
+---
+
 
 
