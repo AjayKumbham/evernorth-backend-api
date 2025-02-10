@@ -1102,7 +1102,7 @@ Authorization: Bearer <token>
 - The `description` field is optional across all requests.
 
 ---
-End of Allergy Records API Documentation.
+
 
 
 
