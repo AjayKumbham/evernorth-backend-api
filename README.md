@@ -203,8 +203,6 @@ The Evernorth Payment APIs allow users to manage their payment methods, includin
 
 This API ensures secure transactions by masking sensitive information such as card numbers and bank account details.
 
----
-
 ### Authentication
 All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
 
@@ -634,7 +632,7 @@ Host: localhost:8080
 Authorization: Bearer <token>
 ```
 
-## Response Codes
+#### Response Codes
 
 - **200 OK** – Payment method deleted successfully.
 - **401 Unauthorized** – Invalid or missing token.
@@ -642,14 +640,79 @@ Authorization: Bearer <token>
 
 ---
 
-## Notes
+#### Notes
 
 - Each user can store one payment method per type.
 - `POST` and `PUT` requests must only include applicable fields; missing fields will be `null` in the response.
 - Masked details (card numbers, bank accounts) ensure security.
 - Bearer token authentication is mandatory for all requests.
 
+Here is the "Get User Addresses" section in the same format as your existing documentation:
 
+---
+
+## Address APIs
+
+The Address API allows users to store, retrieve, update, and remove addresses associated with their account. It provides a structured way to handle user address data, ensuring consistency and security across various applications such as delivery services, billing, and user profiles.
+
+Users can add new addresses, fetch their saved addresses, modify existing ones, or delete them when no longer needed. Each operation requires authentication via a Bearer token, and the API returns appropriate HTTP status codes to indicate the success or failure of the request.
+
+### 1.Get User Addresses
+
+#### Endpoint
+
+GET /api/users/address
+
+
+#### Endpoint
+
+GET /api/users/addresses
+
+#### Description
+
+Retrieves the list of saved addresses for the authenticated user.
+
+#### Authorization
+
+Bearer Token authentication is required.
+
+---
+
+#### Example Request
+
+```
+GET /api/users/addresses HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+```
+
+---
+
+#### Example Response
+
+**Response Body:**
+```json
+[
+    {
+        "addressLabel": "Home",
+        "addressLine1": "123 Main St",
+        "addressLine2": "Apt 4B",
+        "city": "New York",
+        "state": "NY",
+        "zipCode": "10001",
+        "landmark": "Near Central Park"
+    }
+]
+```
+
+---
+
+#### Response Codes
+
+- **200 OK** – Addresses retrieved successfully.
+- **401 Unauthorized** – Invalid or missing token.
+
+---
 
 
 
