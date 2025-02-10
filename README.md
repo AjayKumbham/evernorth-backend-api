@@ -671,7 +671,7 @@ Authorization: Bearer <token>
 - **addressLine1** (string) - Primary address line (e.g., street name, house number). *(Required)*
 - **addressLine2** (string) - Additional address details (e.g., apartment number, landmark). *(Optional)*
 - **city** (string) - Name of the city. *(Required)*
-- **state** (string) - Name of the state. *(Required for POST requests)*
+- **state** (string) - Name of the state. *(Required)*
 - **zipCode** (string) - Postal code of the address. *(Required)*
 - **landmark** (string) - Nearby landmark for easier identification. *(Optional)*
 
@@ -795,7 +795,6 @@ Authorization: Bearer <token>
 #### Notes:
 - Ensure all required fields are provided in the request body.
 - **addressLine2** and **landmark** are optional fields and can be omitted.
-- **State** is required for POST requests but may be optional for updates.
 - The API uses **addressLabel** as a unique identifier for updating and deleting addresses.
 
 
