@@ -661,12 +661,9 @@ Users can add new addresses, fetch their saved addresses, modify existing ones, 
 
 #### Endpoint
 
+```http
 GET /api/users/address
-
-
-#### Endpoint
-
-GET /api/users/addresses
+```
 
 #### Description
 
@@ -680,7 +677,7 @@ Bearer Token authentication is required.
 
 #### Example Request
 
-```
+```http
 GET /api/users/addresses HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
