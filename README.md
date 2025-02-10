@@ -666,67 +666,79 @@ All requests require authentication via a **Bearer Token** in the request header
 Authorization: Bearer <token>
 ```
 
-### Common Address Fields:
-- **addressLabel** (string) - A label for the address (e.g., "Home", "Work"). *(Required)*
-- **addressLine1** (string) - Primary address line (e.g., street name, house number). *(Required)*
-- **addressLine2** (string) - Additional address details (e.g., apartment number, landmark). *(Optional)*
-- **city** (string) - Name of the city. *(Required)*
-- **state** (string) - Name of the state. *(Required)*
-- **zipCode** (string) - Postal code of the address. *(Required)*
-- **landmark** (string) - Nearby landmark for easier identification. *(Optional)*
-
 ---
 
-### Endpoints
+## Request Parameters
+| Parameter       | Type   | Required | Description |
+|---------------|--------|----------|-------------|
+| `addressLabel` | String | Yes      | Unique label for the address (e.g., Home, Work). |
+| `addressLine1` | String | Yes      | Primary address line. |
+| `addressLine2` | String | No       | Secondary address line (optional). |
+| `city`         | String | Yes      | City name. |
+| `state`        | String | Yes      | State name. |
+| `zipCode`      | String | Yes      | Postal code. |
+| `landmark`     | String | No       | Nearby landmark for easy identification (optional). |
 
-#### 1. Get All Addresses
-**Request:**
+---
+## Endpoints
+
+### 1. Get All Addresses
+**Endpoint:**
 ```
 GET /api/users/addresses
-Host: localhost:8080
+```
+**Description:** Retrieves a list of all saved addresses for the authenticated user.
+
+**Request Example:**
+```
+GET http://localhost:8080/api/users/addresses
 Authorization: Bearer <token>
 ```
 
-**Response:**
+**Response Example:**
 ```json
 [
     {
         "addressLabel": "Home",
         "addressLine1": "123 Main St",
-        "addressLine2": "Apt 4B",
+        "addressLine2": "Apt 4B",   // Optional
         "city": "New York",
         "state": "NY",
         "zipCode": "10001",
-        "landmark": "Near Central Park"
+        "landmark": "Near Central Park" // Optional
     }
 ]
 ```
 
 ---
 
-#### 2. Add a New Address
-**Request:**
+### 2. Add a New Address
+**Endpoint:**
 ```
 POST /api/users/addresses
-Host: localhost:8080
+```
+**Description:** Adds a new address for the authenticated user. All fields except `addressLine2` and `landmark` are required.
+
+**Request Example:**
+```
+POST http://localhost:8080/api/users/addresses
 Authorization: Bearer <token>
 Content-Type: application/json
 ```
-
-**Body:**
+**Request Body:**
 ```json
 {
     "addressLabel": "Home",
     "addressLine1": "123 Main St",
-    "addressLine2": "Apt 4B",
+    "addressLine2": "Apt 4B",   // Optional
     "city": "New York",
     "state": "NY",
     "zipCode": "10001",
-    "landmark": "Near Central Park"
+    "landmark": "Near Central Park" // Optional
 }
 ```
 
-**Response:**
+**Response Example:**
 ```json
 {
     "addressLabel": "Home",
@@ -741,28 +753,28 @@ Content-Type: application/json
 
 ---
 
-#### 3. Update an Existing Address
-**Request:**
+### 3. Update an Address
+**Endpoint:**
 ```
 PUT /api/users/addresses/{addressLabel}
-Host: localhost:8080
+```
+**Description:** Updates an existing address identified by `addressLabel`. All fields are optional; only include the fields that need to be updated.
+
+**Request Example:**
+```
+PUT http://localhost:8080/api/users/addresses/home
 Authorization: Bearer <token>
 Content-Type: application/json
 ```
-
-**Body:**
+**Request Body (Example - Updating City and Landmark Only):**
 ```json
 {
-    "addressLabel": "Home",
-    "addressLine1": "123 Main St",
-    "addressLine2": "Apt 4B",
     "city": "Hyderabad",
-    "zipCode": "10001",
     "landmark": "Near Central Vista"
 }
 ```
 
-**Response:**
+**Response Example:**
 ```json
 {
     "addressLabel": "Home",
@@ -777,25 +789,31 @@ Content-Type: application/json
 
 ---
 
-#### 4. Delete an Address
-**Request:**
+### 4. Delete an Address
+**Endpoint:**
 ```
 DELETE /api/users/addresses/{addressLabel}
-Host: localhost:8080
+```
+**Description:** Deletes an address associated with the given `addressLabel`.
+
+**Request Example:**
+```
+DELETE http://localhost:8080/api/users/addresses/Home
 Authorization: Bearer <token>
 ```
 
 **Response:**
-```
-200 OK (No response body)
-```
+- **Status:** `200 OK`
+- **Body:** No response body.
+
+
+
+## Notes
+- All requests require authentication using a Bearer Token.
+- For updating an address, only include fields that need to be changed.
+- `addressLine2` and `landmark` are optional fields across all requests.
+- `addressLabel` should be unique per user.
 
 ---
-
-#### Notes:
-- Ensure all required fields are provided in the request body.
-- **addressLine2** and **landmark** are optional fields and can be omitted.
-- The API uses **addressLabel** as a unique identifier for updating and deleting addresses.
-
 
 
