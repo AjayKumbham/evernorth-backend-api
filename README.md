@@ -303,15 +303,18 @@ Adds a new payment method for the user. The request body should only contain rel
 
 #### Example Requests & Responses
 
-#### (a) Adding a Credit Card
+#### I.Adding a Credit Card
 
-**Request Body:**
+**Request:**
 ```http
 POST /api/users/payments HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
+```
 
+**Request Body:**
+```
 {
     "paymentType": "creditcard",
     "maskedCardNumber": "**3456",
@@ -336,15 +339,18 @@ Content-Type: application/json
 }
 ```
 
-#### (b) Adding a Debit Card
+#### II.Adding a Debit Card
 
-**Request Body:**
+**Request:**
 ```http
 POST /api/users/payments HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
+```
 
+**Request Body:**
+```json
 {
     "paymentType": "debitcard",
     "maskedCardNumber": "**1234",
@@ -369,15 +375,18 @@ Content-Type: application/json
 }
 ```
 
-#### (c) Adding a UPI Payment Method
+#### III.Adding a UPI Payment Method
 
-**Request Body:**
+**Request:**
 ```http
 POST /api/users/payments HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
+```
 
+**Request Body:**
+```json
 {
     "paymentType": "upi",
     "upiId": "john.doe@upi"
@@ -399,15 +408,18 @@ Content-Type: application/json
 }
 ```
 
-#### (d) Adding a Bank Transfer
+#### IV.Adding a Bank Transfer
 
-**Request Body:**
+**Request:**
 ```http
 POST /api/users/payments HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
+```
 
+**Request Body:**
+```json
 {
     "paymentType": "banktransfer",
     "accountHolderName": "John Doe",
@@ -494,6 +506,9 @@ Content-Type: application/json
 **Request:**
 ```
 PUT /api/users/payments/debitcard HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
 ```
 
 **Request Body:**
@@ -526,6 +541,9 @@ PUT /api/users/payments/debitcard HTTP/1.1
 **Request:**
 ```
 PUT /api/users/payments/upi HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
 ```
 
 **Request Body:**
@@ -557,6 +575,9 @@ PUT /api/users/payments/upi HTTP/1.1
 **Request:**
 ```
 PUT /api/users/payments/banktransfer HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
 ```
 
 **Request Body:**
