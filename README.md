@@ -344,6 +344,7 @@ POST /api/users/payments HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
+
 {
     "paymentType": "debitcard",
     "maskedCardNumber": "**1234",
@@ -376,6 +377,7 @@ POST /api/users/payments HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
+
 {
     "paymentType": "upi",
     "upiId": "john.doe@upi"
@@ -405,6 +407,7 @@ POST /api/users/payments HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
+
 {
     "paymentType": "banktransfer",
     "accountHolderName": "John Doe",
