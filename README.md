@@ -702,11 +702,11 @@ Authorization: Bearer <token>
     {
         "addressLabel": "Home",
         "addressLine1": "123 Main St",
-        "addressLine2": "Apt 4B",   // Optional
+        "addressLine2": "Apt 4B",   
         "city": "New York",
         "state": "NY",
         "zipCode": "10001",
-        "landmark": "Near Central Park" // Optional
+        "landmark": "Near Central Park" 
     }
 ]
 ```
@@ -732,11 +732,11 @@ Content-Type: application/json
 {
     "addressLabel": "Home",
     "addressLine1": "123 Main St",
-    "addressLine2": "Apt 4B",   // Optional
+    "addressLine2": "Apt 4B",   
     "city": "New York",
     "state": "NY",
     "zipCode": "10001",
-    "landmark": "Near Central Park" // Optional
+    "landmark": "Near Central Park" 
 }
 ```
 
