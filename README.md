@@ -691,7 +691,7 @@ GET /api/users/addresses
 
 **Request Example:**
 ```
-GET /api/users/addresses
+GET /api/users/addresses HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 ```
@@ -722,7 +722,7 @@ POST /api/users/addresses
 
 **Request Example:**
 ```
-POST /api/users/addresses/home
+POST /api/users/addresses/home HTTP/1.1
 Host:localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
@@ -764,7 +764,7 @@ PUT /api/users/addresses/{addressLabel}
 
 **Request Example:**
 ```
-PUT /api/users/addresses/home
+PUT /api/users/addresses/home HTTP/1.1
 Host:localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
@@ -801,7 +801,7 @@ DELETE /api/users/addresses/{addressLabel}
 
 **Request Example:**
 ```
-DELETE /api/users/addresses/Home
+DELETE /api/users/addresses/Home HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 ```
@@ -852,7 +852,7 @@ GET /api/users/health-records
 
 **Request Example:**
 ```
-GET /api/users/health-records
+GET /api/users/health-records HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 ```
@@ -879,7 +879,7 @@ POST /api/users/health-records
 
 **Request Example:**
 ```
-POST /api/users/health-records
+POST /api/users/health-records HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
@@ -912,7 +912,7 @@ PUT /api/users/health-records/{recordNo}
 
 **Request Example:**
 ```
-PUT /api/users/health-records/1
+PUT /api/users/health-records/1  HTTP/1.1
 Host: localhost:8080 
 Authorization: Bearer <token>
 Content-Type: application/json
@@ -945,7 +945,7 @@ DELETE /api/users/health-records/{recordNo}
 
 **Request Example:**
 ```
-DELETE /api/users/health-records/1
+DELETE /api/users/health-records/1 HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 ```
