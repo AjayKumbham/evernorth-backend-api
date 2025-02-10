@@ -290,9 +290,9 @@ Authorization: Bearer <token>
 - **401 Unauthorized** – Invalid or missing token.
 
 ---
-# Add a New Payment Method
+### 2. Add a New Payment Method
 
-## Endpoint
+### Endpoint
 
 **POST** `/api/users/payments`
 
