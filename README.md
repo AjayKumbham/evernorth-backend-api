@@ -962,6 +962,148 @@ Authorization: Bearer <token>
 - The `description` field is optional across all requests.
 
 ---
+## Allergy Records APIs
+The Allergy Records API provides endpoints to manage user allergy records, including retrieving, adding, updating, and deleting records.
+
+### Authentication
+All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
+
+### Authorization Header Example
+```http
+Authorization: Bearer <token>
+```
+---
+
+## Request Parameters
+| Parameter       | Type   | Required | Description |
+|---------------|--------|----------|-------------|
+| `recordNo`    | Integer | Yes      | Unique identifier for the allergy record. |
+| `allergies`   | String  | Yes      | The name(s) of the allergens. |
+| `description` | String  | No       | Additional details about the allergy (optional). |
+
+---
+## Endpoints
+
+### 1. Get All Allergy Records
+**Endpoint:**
+```
+GET /api/users/allergy-records
+```
+**Description:** Retrieves a list of all recorded allergies for the authenticated user.
+
+**Request Example:**
+```
+GET /api/users/allergy-records HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+```
+
+**Response Example:**
+```json
+[
+    {
+        "recordNo": 1,
+        "allergies": "Peanuts",
+        "description": "Severe allergic reaction, carries EpiPen" // Optional
+    }
+]
+```
+
+---
+
+### 2. Add a New Allergy Record
+**Endpoint:**
+```
+POST /api/users/allergy-records
+```
+**Description:** Adds a new allergy record for the authenticated user. The `description` field is optional.
+
+**Request Example:**
+```
+POST /api/users/allergy-records HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+**Request Body:**
+```json
+{
+    "allergies": "Peanuts",
+    "description": "Severe allergic reaction, carries EpiPen" // Optional
+}
+```
+
+**Response Example:**
+```json
+{
+    "recordNo": 1,
+    "allergies": "Peanuts",
+    "description": "Severe allergic reaction, carries EpiPen"
+}
+```
+
+---
+
+### 3. Update an Allergy Record
+**Endpoint:**
+```
+PUT /api/users/allergy-records/{recordNo}
+```
+**Description:** Updates an existing allergy record identified by `recordNo`. All fields are optional; only include the fields that need to be updated.
+
+**Request Example:**
+```
+PUT /api/users/allergy-records/1 HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+**Request Body (Example - Updating Allergy Information Only):**
+```json
+{
+    "allergies": "Peanuts, Shellfish"
+}
+```
+
+**Response Example:**
+```json
+{
+    "recordNo": 1,
+    "allergies": "Peanuts, Shellfish",
+    "description": "Severe allergic reactions, carries EpiPen"
+}
+```
+
+---
+
+### 4. Delete an Allergy Record
+**Endpoint:**
+```
+DELETE /api/users/allergy-records/{recordNo}
+```
+**Description:** Deletes an allergy record associated with the given `recordNo`.
+
+**Request Example:**
+```
+DELETE /api/users/allergy-records/1 HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+```
+
+**Response:**
+- **Status:** `200 OK`
+- **Body:** No response body.
+
+
+
+## Notes
+- All requests require authentication using a Bearer Token.
+- For updating an allergy record, only include fields that need to be changed.
+- The `description` field is optional across all requests.
+
+---
+End of Allergy Records API Documentation.
+
 
 
 
