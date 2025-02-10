@@ -194,7 +194,6 @@ Content-Type: application/json
 
 ## Payment APIs
 
-## Overview
 The Evernorth Payment APIs allow users to manage their payment methods, including retrieving, adding, updating, and deleting stored payment details. It supports multiple payment types:
 
 - **Credit Card**
@@ -302,7 +301,7 @@ Adds a new payment method for the user. The request body should only contain rel
 
 ## Example Requests & Responses
 
-### Adding a Credit Card
+### (a) Adding a Credit Card
 
 **Request Body:**
 ```json
@@ -330,7 +329,7 @@ Adds a new payment method for the user. The request body should only contain rel
 }
 ```
 
-### Adding a Debit Card
+### (b) Adding a Debit Card
 
 **Request Body:**
 ```json
@@ -358,7 +357,7 @@ Adds a new payment method for the user. The request body should only contain rel
 }
 ```
 
-### Adding a UPI Payment Method
+### (c) Adding a UPI Payment Method
 
 **Request Body:**
 ```json
@@ -383,7 +382,7 @@ Adds a new payment method for the user. The request body should only contain rel
 }
 ```
 
-### Adding a Bank Transfer
+### (d) Adding a Bank Transfer
 
 **Request Body:**
 ```json
