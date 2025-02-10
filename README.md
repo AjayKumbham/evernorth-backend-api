@@ -205,7 +205,7 @@ This API ensures secure transactions by masking sensitive information such as ca
 
 ---
 
-## Authentication
+### Authentication
 All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
 
 ### Authorization Header Example
