@@ -291,17 +291,17 @@ Authorization: Bearer <token>
 ---
 ### 2. Add a New Payment Method
 
-### Endpoint
+#### Endpoint
 
 **POST** `/api/users/payments`
 
-## Description
+#### Description
 
 Adds a new payment method for the user. The request body should only contain relevant fields for the specified payment type. In the response, all fields will be present, but non-applicable ones will be set to `null`.
 
-## Example Requests & Responses
+#### Example Requests & Responses
 
-### (a) Adding a Credit Card
+#### (a) Adding a Credit Card
 
 **Request Body:**
 ```json
@@ -329,7 +329,7 @@ Adds a new payment method for the user. The request body should only contain rel
 }
 ```
 
-### (b) Adding a Debit Card
+#### (b) Adding a Debit Card
 
 **Request Body:**
 ```json
@@ -357,7 +357,7 @@ Adds a new payment method for the user. The request body should only contain rel
 }
 ```
 
-### (c) Adding a UPI Payment Method
+#### (c) Adding a UPI Payment Method
 
 **Request Body:**
 ```json
@@ -382,7 +382,7 @@ Adds a new payment method for the user. The request body should only contain rel
 }
 ```
 
-### (d) Adding a Bank Transfer
+#### (d) Adding a Bank Transfer
 
 **Request Body:**
 ```json
@@ -409,7 +409,7 @@ Adds a new payment method for the user. The request body should only contain rel
 }
 ```
 
-## Response Codes
+#### Response Codes
 
 - **201 Created** – Payment method added successfully.
 - **400 Bad Request** – Invalid input format.
