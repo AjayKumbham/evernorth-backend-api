@@ -437,5 +437,161 @@ Content-Type: application/json
 - **400 Bad Request** – Invalid input format.
 - **401 Unauthorized** – Invalid or missing token.
 
+### 3. Update a Payment Method
+
+#### Endpoint
+
+```http
+PUT /api/users/payments/{paymentType}
+```
+
+#### Description
+
+Updates an existing payment method. Only applicable fields for the specific payment type should be included.
+The `paymentType` itself cannot be updated.
+
+---
+
+#### Example Requests & Responses for Each Payment Type
+
+#### I. Updating a Credit Card
+
+**Request:**
+```
+PUT /api/users/payments/creditcard HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+**Request Body:**
+```json
+{
+    "expiryDate": "2026-07-31",
+    "cardType": "MasterCard"
+}
+```
+
+**Response:**
+```json
+{
+    "paymentType": "creditcard",
+    "maskedCardNumber": "**3456",
+    "upiId": null,
+    "nameOnCard": "John Doe",
+    "expiryDate": "2026-07-31",
+    "cardType": "MasterCard",
+    "accountHolderName": null,
+    "maskedBankAccountNumber": null,
+    "ifscCode": null
+}
+```
+
+---
+
+#### II. Updating a Debit Card
+
+**Request:**
+```
+PUT /api/users/payments/debitcard HTTP/1.1
+```
+
+**Request Body:**
+```json
+{
+    "expiryDate": "2026-10-15",
+    "cardType": "MasterCard"
+}
+```
+
+**Response:**
+```json
+{
+    "paymentType": "debitcard",
+    "maskedCardNumber": "**1234",
+    "upiId": null,
+    "nameOnCard": "John Doe",
+    "expiryDate": "2026-10-15",
+    "cardType": "MasterCard",
+    "accountHolderName": null,
+    "maskedBankAccountNumber": null,
+    "ifscCode": null
+}
+```
+
+---
+
+#### III. Updating a UPI Payment Method
+
+**Request:**
+```
+PUT /api/users/payments/upi HTTP/1.1
+```
+
+**Request Body:**
+```json
+{
+    "upiId": "john.new@upi"
+}
+```
+
+**Response:**
+```json
+{
+    "paymentType": "upi",
+    "maskedCardNumber": null,
+    "upiId": "john.new@upi",
+    "nameOnCard": null,
+    "expiryDate": null,
+    "cardType": null,
+    "accountHolderName": null,
+    "maskedBankAccountNumber": null,
+    "ifscCode": null
+}
+```
+
+---
+
+#### IV. Updating a Bank Transfer
+
+**Request:**
+```
+PUT /api/users/payments/banktransfer HTTP/1.1
+```
+
+**Request Body:**
+```json
+{
+    "accountHolderName": "John D.",
+    "ifscCode": "WXYZ9876543"
+}
+```
+
+**Response:**
+```json
+{
+    "paymentType": "banktransfer",
+    "maskedCardNumber": null,
+    "upiId": null,
+    "nameOnCard": null,
+    "expiryDate": null,
+    "cardType": null,
+    "accountHolderName": "John D.",
+    "maskedBankAccountNumber": "**7890",
+    "ifscCode": "WXYZ9876543"
+}
+```
+
+---
+
+#### Response Codes for PUT Requests
+
+- **200 OK** – Payment method updated successfully.
+- **400 Bad Request** – Invalid request format.
+- **401 Unauthorized** – Invalid or missing token.
+- **404 Not Found** – Payment method not found.
+
+
+
 
 
