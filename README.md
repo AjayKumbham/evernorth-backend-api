@@ -194,31 +194,100 @@ Content-Type: application/json
 
 ## Payment APIs
 
-The Evernorth backend supports multiple payment methods, including credit card, debit card, UPI, and bank transfer. These APIs allow users to securely store their payment details.
+## Overview
+The Evernorth Payment APIs allow users to manage their payment methods, including retrieving, adding, updating, and deleting stored payment details. It supports multiple payment types:
 
-### 5. Add a Payment Method
+- **Credit Card**
+- **Debit Card**
+- **UPI**
+- **Bank Transfer**
 
-**Endpoint:**
+This API ensures secure transactions by masking sensitive information such as card numbers and bank account details.
 
+---
+
+## Authentication
+All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
+
+### Authorization Header Example
+```http
+Authorization: Bearer <token>
 ```
-POST /api/users/payments
+
+---
+
+## Endpoints
+
+### 1. Retrieve All Payment Methods
+
+#### Endpoint
+```http
+GET /api/users/payments
 ```
 
-**Authorization:**
+#### Description
+Retrieves a list of all stored payment methods for the authenticated user.
 
-- Requires Bearer Token in the header.
+#### Request Example
+```http
+GET /api/users/payments HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+```
 
-**Request Parameters:**
+#### Response Example
+```json
+[
+    {
+        "paymentType": "creditcard",
+        "maskedCardNumber": "**3456",
+        "upiId": null,
+        "nameOnCard": "John Doe",
+        "expiryDate": "2025-12-31",
+        "cardType": "VISA",
+        "accountHolderName": null,
+        "maskedBankAccountNumber": null,
+        "ifscCode": null
+    },
+    {
+        "paymentType": "debitcard",
+        "maskedCardNumber": "**1234",
+        "upiId": null,
+        "nameOnCard": "John Doe",
+        "expiryDate": "2026-08-31",
+        "cardType": "MasterCard",
+        "accountHolderName": null,
+        "maskedBankAccountNumber": null,
+        "ifscCode": null
+    },
+    {
+        "paymentType": "upi",
+        "maskedCardNumber": null,
+        "upiId": "john.doe@upi",
+        "nameOnCard": null,
+        "expiryDate": null,
+        "cardType": null,
+        "accountHolderName": null,
+        "maskedBankAccountNumber": null,
+        "ifscCode": null
+    },
+    {
+        "paymentType": "banktransfer",
+        "maskedCardNumber": null,
+        "upiId": null,
+        "nameOnCard": null,
+        "expiryDate": null,
+        "cardType": null,
+        "accountHolderName": "John Doe",
+        "maskedBankAccountNumber": "**7890",
+        "ifscCode": "ABCD0123456"
+    }
+]
+```
 
-- `paymentType` (string, required): Payment type (`creditcard`, `debitcard`, `upi`, `banktransfer`).
-- `cardNumber` (string, optional): Card number (required for `creditcard` and `debitcard`).
-- `nameOnCard` (string, optional): Name on the card.
-- `expiryDate` (string, optional): Expiry date (`YYYY-MM-DD`).
-- `cardType` (string, optional): Card type (`VISA`, `MasterCard`).
-- `upiId` (string, optional): UPI ID (required for `upi`).
-- `accountHolderName` (string, optional): Bank account holder's name (required for `banktransfer`).
-- `bankAccountNumber` (string, optional): Bank account number.
-- `ifscCode` (string, optional): IFSC code.
+#### Response Codes
+- **200 OK** – Payment methods retrieved successfully.
+- **401 Unauthorized** – Invalid or missing token.
 
-**Example Requests:** (for all payment methods) [To be added]
+---
 
