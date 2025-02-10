@@ -612,6 +612,45 @@ Content-Type: application/json
 - **401 Unauthorized** – Invalid or missing token.
 - **404 Not Found** – Payment method not found.
 
+---
+
+### 4.Delete a Payment Method
+
+#### Endpoint
+
+```http
+DELETE  /api/users/payments/{paymentType}
+```
+
+#### Description
+
+Deletes a saved payment method based on its type.
+
+#### Request Example
+
+```
+DELETE /api/users/payments/upi HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+```
+
+## Response Codes
+
+- **200 OK** – Payment method deleted successfully.
+- **401 Unauthorized** – Invalid or missing token.
+- **404 Not Found** – Payment method not found.
+
+---
+
+## Notes
+
+- Each user can store one payment method per type.
+- `POST` and `PUT` requests must only include applicable fields; missing fields will be `null` in the response.
+- Masked details (card numbers, bank accounts) ensure security.
+- Bearer token authentication is mandatory for all requests.
+
+
+
 
 
 
