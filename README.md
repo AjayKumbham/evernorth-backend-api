@@ -290,4 +290,131 @@ Authorization: Bearer <token>
 - **401 Unauthorized** – Invalid or missing token.
 
 ---
+# Add a New Payment Method
+
+## Endpoint
+
+**POST** `/api/users/payments`
+
+## Description
+
+Adds a new payment method for the user. The request body should only contain relevant fields for the specified payment type. In the response, all fields will be present, but non-applicable ones will be set to `null`.
+
+## Example Requests & Responses
+
+### Adding a Credit Card
+
+**Request Body:**
+```json
+{
+    "paymentType": "creditcard",
+    "maskedCardNumber": "**3456",
+    "nameOnCard": "John Doe",
+    "expiryDate": "2025-12-31",
+    "cardType": "VISA"
+}
+```
+
+**Response:**
+```json
+{
+    "paymentType": "creditcard",
+    "maskedCardNumber": "**3456",
+    "upiId": null,
+    "nameOnCard": "John Doe",
+    "expiryDate": "2025-12-31",
+    "cardType": "VISA",
+    "accountHolderName": null,
+    "maskedBankAccountNumber": null,
+    "ifscCode": null
+}
+```
+
+### Adding a Debit Card
+
+**Request Body:**
+```json
+{
+    "paymentType": "debitcard",
+    "maskedCardNumber": "**1234",
+    "nameOnCard": "John Doe",
+    "expiryDate": "2026-08-31",
+    "cardType": "MasterCard"
+}
+```
+
+**Response:**
+```json
+{
+    "paymentType": "debitcard",
+    "maskedCardNumber": "**1234",
+    "upiId": null,
+    "nameOnCard": "John Doe",
+    "expiryDate": "2026-08-31",
+    "cardType": "MasterCard",
+    "accountHolderName": null,
+    "maskedBankAccountNumber": null,
+    "ifscCode": null
+}
+```
+
+### Adding a UPI Payment Method
+
+**Request Body:**
+```json
+{
+    "paymentType": "upi",
+    "upiId": "john.doe@upi"
+}
+```
+
+**Response:**
+```json
+{
+    "paymentType": "upi",
+    "maskedCardNumber": null,
+    "upiId": "john.doe@upi",
+    "nameOnCard": null,
+    "expiryDate": null,
+    "cardType": null,
+    "accountHolderName": null,
+    "maskedBankAccountNumber": null,
+    "ifscCode": null
+}
+```
+
+### Adding a Bank Transfer
+
+**Request Body:**
+```json
+{
+    "paymentType": "banktransfer",
+    "accountHolderName": "John Doe",
+    "maskedBankAccountNumber": "**7890",
+    "ifscCode": "ABCD0123456"
+}
+```
+
+**Response:**
+```json
+{
+    "paymentType": "banktransfer",
+    "maskedCardNumber": null,
+    "upiId": null,
+    "nameOnCard": null,
+    "expiryDate": null,
+    "cardType": null,
+    "accountHolderName": "John Doe",
+    "maskedBankAccountNumber": "**7890",
+    "ifscCode": "ABCD0123456"
+}
+```
+
+## Response Codes
+
+- **201 Created** – Payment method added successfully.
+- **400 Bad Request** – Invalid input format.
+- **401 Unauthorized** – Invalid or missing token.
+
+
 
