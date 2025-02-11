@@ -1004,7 +1004,7 @@ Authorization: Bearer <token>
     {
         "recordNo": 1,
         "allergies": "Peanuts",
-        "description": "Severe allergic reaction, carries EpiPen" // Optional
+        "description": "Severe allergic reaction, carries EpiPen" 
     }
 ]
 ```
@@ -1029,7 +1029,7 @@ Content-Type: application/json
 ```json
 {
     "allergies": "Peanuts",
-    "description": "Severe allergic reaction, carries EpiPen" // Optional
+    "description": "Severe allergic reaction, carries EpiPen" 
 }
 ```
 
