@@ -1103,6 +1103,169 @@ Authorization: Bearer <token>
 
 ---
 
+## Dependents APIs
+
+The Dependents API provides endpoints to manage user dependents, including retrieving, adding, updating, and deleting records.
+
+### Authentication
+All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
+
+### Authorization Header Example
+```http
+Authorization: Bearer <token>
+```
+---
+
+## Request Parameters
+| Parameter       | Type   | Required | Description |
+|---------------|--------|----------|-------------|
+| `fullName`    | String  | Yes      | Full name of the dependent. If it contains spaces, replace them with `%20` in the URL. |
+| `relation`    | String  | Yes      | Relationship of the dependent to the user. |
+| `dob`         | String  | Yes      | Date of birth of the dependent in `YYYY-MM-DD` format. |
+| `mobileNumber` | String  | No       | Mobile number of the dependent (optional). |
+| `emailAddress` | String  | No       | Email address of the dependent (optional). |
+| `emergencySosContact` | Boolean | No | Indicates if this dependent is an emergency contact (optional). |
+
+---
+
+## Endpoints
+
+### 1. Get All Dependents
+**Endpoint:**
+```
+GET /api/users/dependents
+```
+**Description:** Retrieves a list of all dependents for the authenticated user.
+
+**Request Example:**
+```
+GET /api/users/dependents HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+```
+
+**Response Example:**
+```json
+[
+    {
+        "fullName": "Jane Doe",
+        "relation": "Spouse",
+        "dob": "1992-05-15",
+        "mobileNumber": "9876543210",
+        "emailAddress": "jane.doe@example.com",
+        "emergencySosContact": true
+    }
+]
+```
+
+---
+
+### 2. Add a New Dependent
+**Endpoint:**
+```
+POST /api/users/dependents
+```
+**Description:** Adds a new dependent for the authenticated user. 
+
+**Request Example:**
+```
+POST /api/users/dependents HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+**Request Body:**
+```json
+{
+    "fullName": "Jane Doe",
+    "relation": "Spouse",
+    "dob": "1992-05-15",
+    "mobileNumber": "9876543210",
+    "emailAddress": "jane.doe@example.com",
+    "emergencySosContact": true
+}
+```
+
+**Response Example:**
+```json
+{
+    "fullName": "Jane Doe",
+    "relation": "Spouse",
+    "dob": "1992-05-15",
+    "mobileNumber": "9876543210",
+    "emailAddress": "jane.doe@example.com",
+    "emergencySosContact": true
+}
+```
+
+---
+
+### 3. Update a Dependent
+**Endpoint:**
+```
+PUT /api/users/dependents/{fullName}
+```
+**Description:** Updates an existing dependent identified by `fullName`. All fields are optional; only include the fields that need to be updated.
+
+**Note:** If `fullName` contains spaces, it should be replaced with `%20` in the request URL. This is because spaces are not allowed in URLs and `%20` represents a space in URL encoding.
+
+**Request Example:**
+```
+PUT /api/users/dependents/Jane%20Doe HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+**Request Body (Example - Updating Name Only):**
+```json
+{
+    "fullName": "Rahul"
+}
+```
+
+**Response Example:**
+```json
+{
+    "fullName": "Rahul",
+    "relation": "Spouse",
+    "dob": "1992-05-15",
+    "mobileNumber": "9876543210",
+    "emailAddress": "jane.doe@example.com",
+    "emergencySosContact": true
+}
+```
+
+---
+
+### 4. Delete a Dependent
+**Endpoint:**
+```
+DELETE /api/users/dependents/{fullName}
+```
+**Description:** Deletes a dependent associated with the given `fullName`.
+
+**Note:** If `fullName` contains spaces, use `%20` in the request URL to replace spaces.
+
+**Request Example:**
+```
+DELETE /api/users/dependents/Jane%20Doe HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+```
+
+**Response:**
+- **Status:** `200 OK`
+- **Body:** No response body.
+
+
+## Notes
+- All requests require authentication using a Bearer Token.
+- For updating a dependent, only include fields that need to be changed.
+- Spaces in `fullName` should be replaced with `%20` in the request URL to ensure proper encoding.
+
+---
+
+
 
 
 
