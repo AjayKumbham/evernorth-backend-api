@@ -1,10 +1,10 @@
 # Evernorth Backend API Documentation
 
+---
+
 ## Authentication APIs
 
 Authentication in the Evernorth backend is a two-step process for both user registration and login. This ensures security by verifying user identity before storing details or granting access.
-
----
 
 ## Sign-Up Process (2-Step)
 
@@ -23,12 +23,17 @@ This endpoint is used to initiate the user registration process. Upon calling th
 POST /api/auth/register
 ```
 
-**Request Parameters:**
+---
+## Request Parameters
 
-- `fullName` (string, required): The full name of the user.
-- `email` (string, required): The email address of the user.
-- `contact` (string, required): The contact number of the user.
-- `dob` (string, required): The date of birth of the user in `YYYY-MM-DD` format.
+| Parameter   | Type   | Required | Description |
+|------------|--------|----------|-------------|
+| `fullName` | string | Yes      | The full name of the user. |
+| `email`    | string | Yes      | The email address of the user. |
+| `contact`  | string | Yes      | The contact number of the user. |
+| `dob`      | string | Yes      | The date of birth of the user in `YYYY-MM-DD` format. |
+---
+
 
 **Example Request:**
 
