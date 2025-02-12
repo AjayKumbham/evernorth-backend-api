@@ -1,5 +1,4 @@
 # Evernorth Backend API Documentation
-
 ---
 
 ## Authentication APIs
@@ -15,32 +14,29 @@ Authentication in the Evernorth backend is a two-step process for both user regi
 | `contact`  | string | Yes      | The contact number of the user. |
 | `dob`      | string | Yes      | The date of birth of the user in `YYYY-MM-DD` format. |
 
-
-### Sign-Up Process (2-Step)
+## Sign-Up Process (2-Step)
 
 The sign-up process consists of two steps:
 
 1. **User Registration**: The user submits their details to initiate the registration process.
 2. **Email Verification**: The user must verify their email using an OTP. Only after successful verification are the user details stored in the database, and a JWT token is issued.
 
-#### 1. User Registration
-
-This endpoint is used to initiate the user registration process. Upon calling this API, an OTP is sent to the user's email for verification.
+### 1. User Registration
 
 **Endpoint:**
-
 ```
 POST /api/auth/register
 ```
 
-
-**Example Request:**
-
+**Request Example:**
 ```http
 POST /api/v1/auth/register HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
+```
 
+**Request Body**
+```json
 {
     "fullName": "John Doe",
     "email": "kumbhamajaygoud2004@gmail.com",
@@ -49,12 +45,10 @@ Content-Type: application/json
 }
 ```
 
-**Response:**
-
+**Response Example:**
 ```http
 200 OK
 ```
-
 ```
 Registration initiated. Please verify your email with the OTP sent.
 ```
@@ -63,40 +57,36 @@ Registration initiated. Please verify your email with the OTP sent.
 
 ---
 
-#### 2. Email Verification
-
-This endpoint verifies the OTP sent to the user's email. Only upon successful verification are the user details stored in the database, and a JWT token is issued for authentication.
+### 2. Email Verification
 
 **Endpoint:**
-
 ```
 POST /api/auth/verify-email
 ```
 
 **Request Parameters:**
 
-- `email` (string, required): The email address of the user.
-- `otp` (string, required): The OTP sent to the user's email.
+| Parameter | Type   | Required | Description |
+|-----------|--------|----------|-------------|
+| `email`   | string | Yes      | The email address of the user. |
+| `otp`     | string | Yes      | The OTP sent to the user's email. |
 
-**Example Request:**
-
+**Request Example:**
 ```http
-POST /api/v1/auth/verify-email HTTP/1.1
+POST /api/auth/verify-email HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
+```
 
+**Request Body:**
+```json
 {
     "email": "kumbhamajaygoud2004@gmail.com",
     "otp": "813155"
 }
 ```
 
-**Response:**
-
-```http
-200 OK
-```
-
+**Response Example:**
 ```json
 {
     "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKOTAwMSIsImlhdCI6MTczODQ3MzcwNiwiZXhwIjoxNzM4NTYwMTA2fQ.OLYEJtT8lXLiqAzxmNfBjQ4m7Tr3P289LcusvLjOt-I"
@@ -105,87 +95,81 @@ Content-Type: application/json
 
 **Note:** The issued token must be used for authenticated requests.
 
----
 
-### Login Process (2-Step)
+## Login Process (2-Step)
 
 The login process consists of two steps:
 
 1. **Send OTP for Login**: The user requests an OTP to be sent to their registered email.
 2. **Verify OTP and Retrieve Token**: The user enters the OTP to verify their identity and receive a JWT token for authentication.
 
-#### 3. Send OTP for Login
-
-This endpoint is used to send an OTP to the registered email for login authentication.
+### 3. Send OTP for Login
 
 **Endpoint:**
-
 ```
 POST /api/auth/login/send-otp
 ```
 
 **Request Parameters:**
 
-- `email` (string, required): The registered email address of the user.
+| Parameter | Type   | Required | Description |
+|-----------|--------|----------|-------------|
+| `email`   | string | Yes      | The registered email address of the user. |
 
 **Example Request:**
-
 ```http
-POST /api/v1/auth/login/send-otp HTTP/1.1
+POST /api/auth/login/send-otp HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
+```
 
+**Request Body**
+```
 {
     "email": "kumbhamajaygoud2004@gmail.com"
 }
 ```
 
 **Response:**
-
 ```http
 200 OK
 ```
-
 ```
 OTP sent successfully
 ```
 
 ---
 
-#### 4. Verify OTP for Login
-
-This endpoint verifies the OTP entered by the user and returns a JWT token that is valid for authentication.
+### 4. Verify OTP for Login
 
 **Endpoint:**
-
 ```
 POST /api/auth/login/verify-otp
 ```
 
 **Request Parameters:**
 
-- `email` (string, required): The registered email address of the user.
-- `otp` (string, required): The OTP received via email.
+| Parameter | Type   | Required | Description |
+|-----------|--------|----------|-------------|
+| `email`   | string | Yes      | The registered email address of the user. |
+| `otp`     | string | Yes      | The OTP received via email. |
 
-**Example Request:**
-
+**Request Example:**
 ```http
-POST /api/v1/auth/login/verify-otp HTTP/1.1
+POST /api/auth/login/verify-otp HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
+```
 
+**Request Body**
+```json
 {
     "email": "kumbhamajaygoud2004@gmail.com",
     "otp": "848734"
 }
 ```
 
-**Response:**
-
-```http
-200 OK
-```
-
+**Response Example:**
 ```json
 {
     "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKOTAwMSIsImlhdCI6MTczODQyMDY3OCwiZXhwIjoxNzM4NTA3MDc4fQ.YwEjcQuBGJpl-DshR1-ffM5iiVcqu6Il_cfchuiT_Ww"
@@ -194,44 +178,39 @@ Content-Type: application/json
 
 **Note:** The token returned is a JWT token and is valid for exactly **24 hours (1 day)**. This token must be included in the Authorization header for accessing protected resources.
 
----
+## Logout User
 
-### 5.Logout User
-
-#### Authentication
+### Authentication
 All requests require authentication via a **Bearer Token** in the request header.
 
-#### Authorization Header Example
+### Authorization Header Example
 ```http
 Authorization: Bearer <token>
 ```
 
 **Endpoint:**
-
-```http
+```
 POST /api/auth/logout
 ```
 
-**Description**
+### Description
 The Evernorth Logout API allows users to securely log out by invalidating their authentication token. When this API is called with a valid Bearer Token in the request header, the backend will add that token to a blacklist. Once blacklisted, the token becomes unusable for any further API requests, effectively logging the user out.
 
 Additionally, blacklisted tokens will be automatically cleaned up upon their expiration to optimize storage and security.
 
-
-**Request Example:**
+### Request Example:
 ```http
 POST /api/auth/logout HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 ```
 
-**Response Example:**
-
+### Response Example:
 ```http
 200 OK
 ```
 
-#### Response Codes
+### Response Codes
 - **200 OK** – User successfully logged out.
 - **401 Unauthorized** – Invalid or missing token.
 
@@ -249,15 +228,6 @@ All requests require authentication via a **Bearer Token** in the request header
 Authorization: Bearer <token>
 ```
 
-## Request Parameters
-| Parameter    | Type   |  Description |
-|-------------|--------|-------------|
-| `memberId`  | String | Unique identifier for the user (cannot be changed). |
-| `fullName`  | String | Full name of the user. |
-| `email`     | String | Email address (only updated via two-step verification). |
-| `contact`   | String | Contact number of the user. |
-| `dob`       | String | Date of birth in `YYYY-MM-DD` format. |
-| `otp`       | String | One-time password received for email verification. |
 
 ## Endpoints
 
@@ -269,7 +239,7 @@ GET /api/users/profile
 **Description:** Retrieves the profile data of the authenticated user.
 
 **Request Example:**
-```
+```http
 GET /api/users/profile HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
