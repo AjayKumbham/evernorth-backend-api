@@ -234,6 +234,172 @@ Authorization: Bearer <token>
 ---
 
 ---
+## Profile APIs
+
+The Profile API allows users to retrieve, update, and verify their profile information. The API includes endpoints for fetching profile data, updating profile details, and updating the email address through a two-step verification process.
+
+### Authentication
+All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
+
+### Authorization Header Example
+```http
+Authorization: Bearer <token>
+```
+---
+
+## Request Parameters
+| Parameter    | Type   |  Description |
+|-------------|--------|-------------|
+| `memberId`  | String | Unique identifier for the user (cannot be changed). |
+| `fullName`  | String | Full name of the user. |
+| `email`     | String | Email address (only updated via two-step verification). |
+| `contact`   | String | Contact number of the user. |
+| `dob`       | String | Date of birth in `YYYY-MM-DD` format. |
+| `otp`       | String | One-time password received for email verification. |
+
+---
+
+## Endpoints
+
+### 1. Get Profile Data
+**Endpoint:**
+```
+GET /api/users/profile
+```
+**Description:** Retrieves the profile data of the authenticated user.
+
+**Request Example:**
+```
+GET /api/users/profile HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+```
+
+**Response Example:**
+```json
+{
+    "memberId": "J9001",
+    "fullName": "John Doe",
+    "email": "kumbhamajaygoud2004@gmail.com",
+    "contact": "1234567890",
+    "dob": "1990-01-01",
+    "createdAt": "2025-02-01T20:03:25.559487"
+}
+```
+
+---
+
+### 2. Update Profile Data
+**Endpoint:**
+```
+PUT /api/users/profile
+```
+**Description:** Updates the user's profile information, except for the `email` and `memberId`, which cannot be changed. All fields are optional; only include the fields that need to be updated.
+
+**Request Example:**
+```
+PUT /api/users/profile HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+**Request Body:**
+```json
+{
+    "fullName": "Ajay Kumbham",
+    "contact": "9876543210",
+    "dob": "2004-01-01"
+}
+```
+
+**Response Example:**
+```json
+{
+    "memberId": "J9001",
+    "fullName": "Ajay Kumbham",
+    "email": "kumbhamajaygoud2004@gmail.com",
+    "contact": "9876543210",
+    "dob": "2004-01-01",
+    "createdAt": "2025-02-06T21:49:51.768617"
+}
+```
+
+---
+
+### 3. Email Update (Two-Step Process)
+#### Step 1: Request Email Verification
+**Endpoint:**
+```
+POST /api/v1/users/profile/verify-email
+```
+**Description:** Sends a verification email to the new email address provided by the user.
+
+**Request Example:**
+```
+POST /api/v1/users/profile/verify-email HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+**Request Body:**
+```json
+{
+    "email": "kumbhamajaygoud22cs@student.vardhaman.org"
+}
+```
+
+**Response Example:**
+```
+Verification email sent successfully
+```
+
+#### Step 2: Verify Email with OTP
+**Endpoint:**
+```
+PUT /api/v1/users/profile/verify-email
+```
+**Description:** Verifies the new email using an OTP received in the verification email.
+
+**Request Example:**
+```
+PUT /api/v1/users/profile/verify-email HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+**Request Body:**
+```json
+{
+    "email": "kumbhamajaygoud22cs@student.vardhaman.org",
+    "otp": "375394"
+}
+```
+
+**Response Example:**
+```json
+{
+    "memberId": "K0401",
+    "fullName": "Kumbham Ajay Goud",
+    "email": "kumbhamajaygoud22cs@student.vardhaman.org",
+    "contact": "9391942662",
+    "dob": "2004-08-25",
+    "createdAt": "2025-02-05T10:36:00.766806"
+}
+```
+
+## OTP Expiration Details
+- **For sign-up:** OTP expires in **5 minutes**.
+- **For login:** OTP expires in **1 minute**.
+- **After expiration, the OTP value becomes null.**
+
+
+## Notes
+- All requests require authentication using a Bearer Token.
+- Updating a profile does not allow changes to `email` and `memberId`.
+- Email updates require verification using an OTP sent to the new email.
+- Ensure the `otp` is correctly entered within the validity period for successful verification.
+
+---
 
 ## Payment APIs
 
