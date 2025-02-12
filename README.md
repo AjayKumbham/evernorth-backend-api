@@ -6,14 +6,24 @@
 
 Authentication in the Evernorth backend is a two-step process for both user registration and login. This ensures security by verifying user identity before storing details or granting access.
 
-## Sign-Up Process (2-Step)
+### Request Parameters
+
+| Parameter   | Type   | Required | Description |
+|------------|--------|----------|-------------|
+| `fullName` | string | Yes      | The full name of the user. |
+| `email`    | string | Yes      | The email address of the user. |
+| `contact`  | string | Yes      | The contact number of the user. |
+| `dob`      | string | Yes      | The date of birth of the user in `YYYY-MM-DD` format. |
+
+
+### Sign-Up Process (2-Step)
 
 The sign-up process consists of two steps:
 
 1. **User Registration**: The user submits their details to initiate the registration process.
 2. **Email Verification**: The user must verify their email using an OTP. Only after successful verification are the user details stored in the database, and a JWT token is issued.
 
-### 1. User Registration
+#### 1. User Registration
 
 This endpoint is used to initiate the user registration process. Upon calling this API, an OTP is sent to the user's email for verification.
 
@@ -22,17 +32,6 @@ This endpoint is used to initiate the user registration process. Upon calling th
 ```
 POST /api/auth/register
 ```
-
----
-## Request Parameters
-
-| Parameter   | Type   | Required | Description |
-|------------|--------|----------|-------------|
-| `fullName` | string | Yes      | The full name of the user. |
-| `email`    | string | Yes      | The email address of the user. |
-| `contact`  | string | Yes      | The contact number of the user. |
-| `dob`      | string | Yes      | The date of birth of the user in `YYYY-MM-DD` format. |
----
 
 
 **Example Request:**
@@ -64,7 +63,7 @@ Registration initiated. Please verify your email with the OTP sent.
 
 ---
 
-### 2. Email Verification
+#### 2. Email Verification
 
 This endpoint verifies the OTP sent to the user's email. Only upon successful verification are the user details stored in the database, and a JWT token is issued for authentication.
 
@@ -108,14 +107,14 @@ Content-Type: application/json
 
 ---
 
-## Login Process (2-Step)
+### Login Process (2-Step)
 
 The login process consists of two steps:
 
 1. **Send OTP for Login**: The user requests an OTP to be sent to their registered email.
 2. **Verify OTP and Retrieve Token**: The user enters the OTP to verify their identity and receive a JWT token for authentication.
 
-### 3. Send OTP for Login
+#### 3. Send OTP for Login
 
 This endpoint is used to send an OTP to the registered email for login authentication.
 
@@ -153,7 +152,7 @@ OTP sent successfully
 
 ---
 
-### 4. Verify OTP for Login
+#### 4. Verify OTP for Login
 
 This endpoint verifies the OTP entered by the user and returns a JWT token that is valid for authentication.
 
@@ -238,7 +237,6 @@ Authorization: Bearer <token>
 
 ---
 
----
 ## Profile APIs
 
 The Profile API allows users to retrieve, update, and verify their profile information. The API includes endpoints for fetching profile data, updating profile details, and updating the email address through a two-step verification process.
