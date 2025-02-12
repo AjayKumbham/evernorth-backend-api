@@ -194,7 +194,7 @@ Content-Type: application/json
 
 ### 5.Logout User
 
-## Authentication
+### Authentication
 All requests require authentication via a **Bearer Token** in the request header.
 
 ### Authorization Header Example
