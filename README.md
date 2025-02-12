@@ -387,13 +387,13 @@ Content-Type: application/json
 }
 ```
 
-## OTP Expiration Details
+### OTP Expiration Details
 - **For sign-up:** OTP expires in **5 minutes**.
 - **For login:** OTP expires in **1 minute**.
 - **After expiration, the OTP value becomes null.**
 
 
-## Notes
+### Notes
 - All requests require authentication using a Bearer Token.
 - Updating a profile does not allow changes to `email` and `memberId`.
 - Email updates require verification using an OTP sent to the new email.
