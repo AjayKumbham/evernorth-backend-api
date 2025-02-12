@@ -248,7 +248,6 @@ All requests require authentication via a **Bearer Token** in the request header
 ```http
 Authorization: Bearer <token>
 ```
----
 
 ## Request Parameters
 | Parameter    | Type   |  Description |
@@ -259,8 +258,6 @@ Authorization: Bearer <token>
 | `contact`   | String | Contact number of the user. |
 | `dob`       | String | Date of birth in `YYYY-MM-DD` format. |
 | `otp`       | String | One-time password received for email verification. |
-
----
 
 ## Endpoints
 
@@ -289,8 +286,6 @@ Authorization: Bearer <token>
     "createdAt": "2025-02-01T20:03:25.559487"
 }
 ```
-
----
 
 ### 2. Update Profile Data
 **Endpoint:**
@@ -333,13 +328,13 @@ Content-Type: application/json
 #### Step 1: Request Email Verification
 **Endpoint:**
 ```
-POST /api/v1/users/profile/verify-email
+POST /api/users/profile/verify-email
 ```
 **Description:** Sends a verification email to the new email address provided by the user.
 
 **Request Example:**
 ```
-POST /api/v1/users/profile/verify-email HTTP/1.1
+POST /api/users/profile/verify-email HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
