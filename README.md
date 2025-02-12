@@ -192,6 +192,49 @@ Content-Type: application/json
 
 ---
 
+### 5.Logout User
+
+## Authentication
+All requests require authentication via a **Bearer Token** in the request header.
+
+### Authorization Header Example
+```http
+Authorization: Bearer <token>
+```
+
+**Endpoint:**
+
+```http
+POST /api/auth/logout
+```
+
+**Description**
+The Evernorth Logout API allows users to securely log out by invalidating their authentication token. When this API is called with a valid Bearer Token in the request header, the backend will add that token to a blacklist. Once blacklisted, the token becomes unusable for any further API requests, effectively logging the user out.
+
+Additionally, blacklisted tokens will be automatically cleaned up upon their expiration to optimize storage and security.
+
+
+**Request Example:**
+```http
+POST /api/auth/logout HTTP/1.1
+Host: localhost:8080
+Authorization: Bearer <token>
+```
+
+**Response Example:**
+
+```http
+200 OK
+```
+
+#### Response Codes
+- **200 OK** – User successfully logged out.
+- **401 Unauthorized** – Invalid or missing token.
+
+---
+
+---
+
 ## Payment APIs
 
 The Evernorth Payment APIs allow users to manage their payment methods, including retrieving, adding, updating, and deleting stored payment details. It supports multiple payment types:
