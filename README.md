@@ -1,7 +1,7 @@
 # Evernorth Backend API Documentation
 ---
 
-## Authentication APIs
+## 1.Authentication APIs
 
 Authentication in the Evernorth backend is a two-step process for both user registration and login. This ensures security by verifying user identity before storing details or granting access.
 
@@ -216,7 +216,7 @@ Authorization: Bearer <token>
 
 ---
 
-## Profile APIs
+## 2.Profile APIs
 
 The Profile API allows users to retrieve, update, and verify their profile information. The API includes endpoints for fetching profile data, updating profile details, and updating the email address through a two-step verification process.
 
@@ -369,7 +369,7 @@ Content-Type: application/json
 
 ---
 
-## Payment APIs
+## 3.Payment APIs
 
 The Evernorth Payment APIs allow users to manage their payment methods, including retrieving, adding, updating, and deleting stored payment details. It supports multiple payment types:
 
@@ -814,7 +814,7 @@ Here is the "Get User Addresses" section in the same format as your existing doc
 
 ---
 
-## Address APIs
+## 4.Address APIs
 
 The Address API allows users to store, retrieve, update, and remove addresses associated with their account. It provides a structured way to handle user address data, ensuring consistency and security across various applications such as delivery services, billing, and user profiles.
 
@@ -974,7 +974,7 @@ Authorization: Bearer <token>
 - `addressLabel` should be unique per user.
 
 ---
-## Health Conditions API
+## 5.Health Conditions API
 
 The Health Conditions API provides endpoints to manage user health records, including retrieving, adding, updating, and deleting health conditions.
 
@@ -1109,7 +1109,7 @@ Authorization: Bearer <token>
 - The `description` field is optional across all requests.
 
 ---
-## Allergy Records APIs
+## 6.Allergy Records APIs
 The Allergy Records API provides endpoints to manage user allergy records, including retrieving, adding, updating, and deleting records.
 
 ### Authentication
@@ -1243,7 +1243,7 @@ Authorization: Bearer <token>
 - The `description` field is optional across all requests.
 
 
-## Dependents APIs
+## 7.Dependents APIs
 
 The Dependents API provides endpoints to manage user dependents, including retrieving, adding, updating, and deleting records.
 
