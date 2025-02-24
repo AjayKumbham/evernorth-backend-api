@@ -324,13 +324,13 @@ Verification email sent successfully
 #### Step 2: Verify Email with OTP
 **Endpoint:**
 ```
-PUT /api/v1/users/profile/verify-email
+PUT /api/users/profile/verify-email
 ```
 **Description:** Verifies the new email using an OTP received in the verification email.
 
 **Request Example:**
 ```
-PUT /api/v1/users/profile/verify-email HTTP/1.1
+PUT /api/users/profile/verify-email HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 Content-Type: application/json
