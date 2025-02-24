@@ -55,7 +55,7 @@ Registration initiated. Please verify your email with the OTP sent.
 
 **Note:** Upon successful email verification, a JWT token is issued.
 
----
+
 
 ### 2. Email Verification
 
@@ -138,7 +138,7 @@ Content-Type: application/json
 OTP sent successfully
 ```
 
----
+
 
 ### 4. Verify OTP for Login
 
@@ -292,7 +292,7 @@ Content-Type: application/json
 }
 ```
 
----
+
 
 ### 3. Email Update (Two-Step Process)
 #### Step 1: Request Email Verification
@@ -388,8 +388,6 @@ All requests require authentication via a **Bearer Token** in the request header
 Authorization: Bearer <token>
 ```
 
----
-
 ## Endpoints
 
 ### 1. Retrieve All Payment Methods
@@ -463,7 +461,6 @@ Authorization: Bearer <token>
 - **200 OK** – Payment methods retrieved successfully.
 - **401 Unauthorized** – Invalid or missing token.
 
----
 ### 2. Add a New Payment Method
 
 #### Endpoint
@@ -637,8 +634,6 @@ PUT /api/users/payments/{paymentType}
 Updates an existing payment method. Only applicable fields for the specific payment type should be included.
 The `paymentType` itself cannot be updated.
 
----
-
 #### Example Requests & Responses for Each Payment Type
 
 #### I. Updating a Credit Card
@@ -674,8 +669,6 @@ Content-Type: application/json
 }
 ```
 
----
-
 #### II. Updating a Debit Card
 
 **Request:**
@@ -709,8 +702,6 @@ Content-Type: application/json
 }
 ```
 
----
-
 #### III. Updating a UPI Payment Method
 
 **Request:**
@@ -742,8 +733,6 @@ Content-Type: application/json
     "ifscCode": null
 }
 ```
-
----
 
 #### IV. Updating a Bank Transfer
 
@@ -777,8 +766,6 @@ Content-Type: application/json
     "ifscCode": "WXYZ9876543"
 }
 ```
-
----
 
 #### Response Codes for PUT Requests
 
@@ -815,7 +802,6 @@ Authorization: Bearer <token>
 - **401 Unauthorized** – Invalid or missing token.
 - **404 Not Found** – Payment method not found.
 
----
 
 #### Notes
 
@@ -842,8 +828,6 @@ All requests require authentication via a **Bearer Token** in the request header
 ```http
 Authorization: Bearer <token>
 ```
-
----
 
 ## Request Parameters
 | Parameter       | Type   | Required | Description |
@@ -888,8 +872,6 @@ Authorization: Bearer <token>
 ]
 ```
 
----
-
 ### 2. Add a New Address
 **Endpoint:**
 ```
@@ -930,8 +912,6 @@ Content-Type: application/json
 }
 ```
 
----
-
 ### 3. Update an Address
 **Endpoint:**
 ```
@@ -966,8 +946,6 @@ Content-Type: application/json
     "landmark": "Near Central Vista"
 }
 ```
-
----
 
 ### 4. Delete an Address
 **Endpoint:**
@@ -1007,7 +985,6 @@ All requests require authentication via a **Bearer Token** in the request header
 ```http
 Authorization: Bearer <token>
 ```
----
 
 ## Request Parameters
 | Parameter         | Type   | Required | Description |
@@ -1016,7 +993,6 @@ Authorization: Bearer <token>
 | `healthCondition` | String | Yes      | Name of the health condition. |
 | `description`     | String | No       | Additional details about the condition (optional). |
 
----
 
 ## Endpoints
 
@@ -1044,8 +1020,6 @@ Authorization: Bearer <token>
     }
 ]
 ```
-
----
 
 ### 2. Add a New Health Record
 **Endpoint:**
@@ -1078,8 +1052,6 @@ Content-Type: application/json
 }
 ```
 
----
-
 ### 3. Update a Health Record
 **Endpoint:**
 ```
@@ -1110,8 +1082,6 @@ Content-Type: application/json
     "description": "Type 1 diabetes with regular medication"
 }
 ```
-
----
 
 ### 4. Delete a Health Record
 **Endpoint:**
@@ -1149,7 +1119,6 @@ All requests require authentication via a **Bearer Token** in the request header
 ```http
 Authorization: Bearer <token>
 ```
----
 
 ## Request Parameters
 | Parameter       | Type   | Required | Description |
@@ -1158,7 +1127,6 @@ Authorization: Bearer <token>
 | `allergies`   | String  | Yes      | The name(s) of the allergens. |
 | `description` | String  | No       | Additional details about the allergy (optional). |
 
----
 ## Endpoints
 
 ### 1. Get All Allergy Records
@@ -1219,8 +1187,6 @@ Content-Type: application/json
 }
 ```
 
----
-
 ### 3. Update an Allergy Record
 **Endpoint:**
 ```
@@ -1251,8 +1217,6 @@ Content-Type: application/json
 }
 ```
 
----
-
 ### 4. Delete an Allergy Record
 **Endpoint:**
 ```
@@ -1278,7 +1242,6 @@ Authorization: Bearer <token>
 - For updating an allergy record, only include fields that need to be changed.
 - The `description` field is optional across all requests.
 
----
 
 ## Dependents APIs
 
@@ -1291,7 +1254,6 @@ All requests require authentication via a **Bearer Token** in the request header
 ```http
 Authorization: Bearer <token>
 ```
----
 
 ## Request Parameters
 | Parameter       | Type   | Required | Description |
@@ -1303,7 +1265,6 @@ Authorization: Bearer <token>
 | `emailAddress` | String  | No       | Email address of the dependent (optional). |
 | `emergencySosContact` | Boolean | No | Indicates if this dependent is an emergency contact (optional). |
 
----
 
 ## Endpoints
 
@@ -1335,7 +1296,6 @@ Authorization: Bearer <token>
 ]
 ```
 
----
 
 ### 2. Add a New Dependent
 **Endpoint:**
@@ -1375,8 +1335,6 @@ Content-Type: application/json
 }
 ```
 
----
-
 ### 3. Update a Dependent
 **Endpoint:**
 ```
@@ -1411,8 +1369,6 @@ Content-Type: application/json
     "emergencySosContact": true
 }
 ```
-
----
 
 ### 4. Delete a Dependent
 **Endpoint:**
