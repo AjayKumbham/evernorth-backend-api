@@ -1,24 +1,24 @@
 # Evernorth Backend API Documentation
----  
-## Project Overview  
 
-This repository contains the backend API developed as part of a real-time case study provided by Evernorth. The project was designed to simulate an industry-level backend system using spring boot, implementing best practices in API development, security, and scalability using Spring Boot.  
+## Project Overview
 
-### Project Details  
-- **Company:** Evernorth (Provided as a real-time case study)  
-- **Role:** Team Leader & Backend Developer  
+This repository contains the backend API developed as part of a real-time case study provided by Evernorth. The project was designed to simulate an industry-level backend system using Spring Boot, implementing best practices in API development, security, and scalability.
+
+### Project Details
+- **Company:** Evernorth (Provided as a real-time case study)
+- **Role:** Team Leader & Backend Developer
 - **Technologies:** Spring Boot, MySQL, JWT 
-- **Purpose:** Practical experience in enterprise backend development  
+- **Purpose:** Practical experience in enterprise backend development
 
-**Note:** This project is developed for learning purposes only and does not represent an official Evernorth product.  
+**Note:** This project is developed for learning purposes only and does not represent an official Evernorth product.
 
----  
+## API Documentation
 
-## I.Authentication APIs
+### I. Authentication APIs
 
 Authentication in the Evernorth backend is a two-step process for both user registration and login. This ensures security by verifying user identity before storing details or granting access.
 
-### Request Parameters
+#### Request Parameters
 
 | Parameter   | Type   | Required | Description |
 |------------|--------|----------|-------------|
@@ -27,14 +27,14 @@ Authentication in the Evernorth backend is a two-step process for both user regi
 | `contact`  | string | Yes      | The contact number of the user. |
 | `dob`      | string | Yes      | The date of birth of the user in `YYYY-MM-DD` format. |
 
-## Sign-Up Process (2-Step)
+#### Sign-Up Process (2-Step)
 
 The sign-up process consists of two steps:
 
 1. **User Registration**: The user submits their details to initiate the registration process.
 2. **Email Verification**: The user must verify their email using an OTP. Only after successful verification are the user details stored in the database, and a JWT token is issued.
 
-### 1. User Registration
+##### 1. User Registration
 
 **Endpoint:**
 ```
@@ -68,9 +68,7 @@ Registration initiated. Please verify your email with the OTP sent.
 
 **Note:** Upon successful email verification, a JWT token is issued.
 
-
-
-### 2. Email Verification
+##### 2. Email Verification
 
 **Endpoint:**
 ```
@@ -108,15 +106,14 @@ Content-Type: application/json
 
 **Note:** The issued token must be used for authenticated requests.
 
-
-## Login Process (2-Step)
+#### Login Process (2-Step)
 
 The login process consists of two steps:
 
 1. **Send OTP for Login**: The user requests an OTP to be sent to their registered email.
 2. **Verify OTP and Retrieve Token**: The user enters the OTP to verify their identity and receive a JWT token for authentication.
 
-### 3. Send OTP for Login
+##### 3. Send OTP for Login
 
 **Endpoint:**
 ```
@@ -151,9 +148,7 @@ Content-Type: application/json
 OTP sent successfully
 ```
 
-
-
-### 4. Verify OTP for Login
+##### 4. Verify OTP for Login
 
 **Endpoint:**
 ```
@@ -191,60 +186,49 @@ Content-Type: application/json
 
 **Note:** The token returned is a JWT token and is valid for exactly **24 hours (1 day)**. This token must be included in the Authorization header for accessing protected resources.
 
-## Logout User
-
-### Authentication
-All requests require authentication via a **Bearer Token** in the request header.
-
-### Authorization Header Example
-```http
-Authorization: Bearer <token>
-```
+##### Logout User
 
 **Endpoint:**
 ```
 POST /api/auth/logout
 ```
 
-### Description
+**Description:** 
 The Evernorth Logout API allows users to securely log out by invalidating their authentication token. When this API is called with a valid Bearer Token in the request header, the backend will add that token to a blacklist. Once blacklisted, the token becomes unusable for any further API requests, effectively logging the user out.
 
 Additionally, blacklisted tokens will be automatically cleaned up upon their expiration to optimize storage and security.
 
-### Request Example:
+**Request Example:**
 ```http
 POST /api/auth/logout HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 ```
 
-### Response Example:
+**Response Example:**
 ```http
 200 OK
 ```
 
-### Response Codes
+**Response Codes:**
 - **200 OK** – User successfully logged out.
 - **401 Unauthorized** – Invalid or missing token.
 
----
-
-## II.Profile APIs
+### II. Profile APIs
 
 The Profile API allows users to retrieve, update, and verify their profile information. The API includes endpoints for fetching profile data, updating profile details, and updating the email address through a two-step verification process.
 
-### Authentication
+#### Authentication
 All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
 
-### Authorization Header Example
+**Authorization Header Example:**
 ```http
 Authorization: Bearer <token>
 ```
 
+#### Endpoints
 
-## Endpoints
-
-### 1. Get Profile Data
+##### 1. Get Profile Data
 **Endpoint:**
 ```
 GET /api/users/profile
@@ -270,7 +254,7 @@ Authorization: Bearer <token>
 }
 ```
 
-### 2. Update Profile Data
+##### 2. Update Profile Data
 **Endpoint:**
 ```
 PUT /api/users/profile
@@ -305,10 +289,8 @@ Content-Type: application/json
 }
 ```
 
-
-
-### 3. Email Update (Two-Step Process)
-#### Step 1: Request Email Verification
+##### 3. Email Update (Two-Step Process)
+###### Step 1: Request Email Verification
 **Endpoint:**
 ```
 POST /api/users/profile/verify-email
@@ -334,7 +316,7 @@ Content-Type: application/json
 Verification email sent successfully
 ```
 
-#### Step 2: Verify Email with OTP
+###### Step 2: Verify Email with OTP
 **Endpoint:**
 ```
 PUT /api/users/profile/verify-email
@@ -368,21 +350,18 @@ Content-Type: application/json
 }
 ```
 
-### OTP Expiration Details
+#### OTP Expiration Details
 - **For sign-up:** OTP expires in **5 minutes**.
 - **For login:** OTP expires in **1 minute**.
 - **After expiration, the OTP value becomes null.**
 
-
-### Notes
+#### Notes
 - All requests require authentication using a Bearer Token.
 - Updating a profile does not allow changes to `email` and `memberId`.
 - Email updates require verification using an OTP sent to the new email.
 - Ensure the `otp` is correctly entered within the validity period for successful verification.
 
----
-
-## III.Payment APIs
+### III. Payment APIs
 
 The Evernorth Payment APIs allow users to manage their payment methods, including retrieving, adding, updating, and deleting stored payment details. It supports multiple payment types:
 
@@ -393,34 +372,34 @@ The Evernorth Payment APIs allow users to manage their payment methods, includin
 
 This API ensures secure transactions by masking sensitive information such as card numbers and bank account details.
 
-### Authentication
+#### Authentication
 All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
 
-### Authorization Header Example
+**Authorization Header Example:**
 ```http
 Authorization: Bearer <token>
 ```
 
-## Endpoints
+#### Endpoints
 
-### 1. Retrieve All Payment Methods
+##### 1. Retrieve All Payment Methods
 
-#### Endpoint
+**Endpoint:**
 ```http
 GET /api/users/payments
 ```
 
-#### Description
+**Description:**
 Retrieves a list of all stored payment methods for the authenticated user.
 
-#### Request Example
+**Request Example:**
 ```http
 GET /api/users/payments HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 ```
 
-#### Response Example
+**Response Example:**
 ```json
 [
     {
@@ -470,25 +449,23 @@ Authorization: Bearer <token>
 ]
 ```
 
-#### Response Codes
+**Response Codes:**
 - **200 OK** – Payment methods retrieved successfully.
 - **401 Unauthorized** – Invalid or missing token.
 
-### 2. Add a New Payment Method
+##### 2. Add a New Payment Method
 
-#### Endpoint
-
+**Endpoint:**
 ```http
 POST /api/users/payments
 ```
 
-#### Description
-
+**Description:**
 Adds a new payment method for the user. The request body should only contain relevant fields for the specified payment type. In the response, all fields will be present, but non-applicable ones will be set to `null`.
 
-#### Example Requests & Responses
+###### Example Requests & Responses
 
-#### I.Adding a Credit Card
+**Adding a Credit Card:**
 
 **Request:**
 ```http
@@ -524,7 +501,7 @@ Content-Type: application/json
 }
 ```
 
-#### II.Adding a Debit Card
+**Adding a Debit Card:**
 
 **Request:**
 ```http
@@ -560,7 +537,7 @@ Content-Type: application/json
 }
 ```
 
-#### III.Adding a UPI Payment Method
+**Adding a UPI Payment Method:**
 
 **Request:**
 ```http
@@ -593,7 +570,7 @@ Content-Type: application/json
 }
 ```
 
-#### IV.Adding a Bank Transfer
+**Adding a Bank Transfer:**
 
 **Request:**
 ```http
@@ -628,28 +605,25 @@ Content-Type: application/json
 }
 ```
 
-#### Response Codes
-
+**Response Codes:**
 - **201 Created** – Payment method added successfully.
 - **400 Bad Request** – Invalid input format.
 - **401 Unauthorized** – Invalid or missing token.
 
-### 3. Update a Payment Method
+##### 3. Update a Payment Method
 
-#### Endpoint
-
+**Endpoint:**
 ```http
 PUT /api/users/payments/{paymentType}
 ```
 
-#### Description
-
+**Description:**
 Updates an existing payment method. Only applicable fields for the specific payment type should be included.
 The `paymentType` itself cannot be updated.
 
-#### Example Requests & Responses for Each Payment Type
+###### Example Requests & Responses for Each Payment Type
 
-#### I. Updating a Credit Card
+**Updating a Credit Card:**
 
 **Request:**
 ```
@@ -682,7 +656,7 @@ Content-Type: application/json
 }
 ```
 
-#### II. Updating a Debit Card
+**Updating a Debit Card:**
 
 **Request:**
 ```
@@ -715,7 +689,7 @@ Content-Type: application/json
 }
 ```
 
-#### III. Updating a UPI Payment Method
+**Updating a UPI Payment Method:**
 
 **Request:**
 ```
@@ -747,7 +721,7 @@ Content-Type: application/json
 }
 ```
 
-#### IV. Updating a Bank Transfer
+**Updating a Bank Transfer:**
 
 **Request:**
 ```
@@ -780,69 +754,55 @@ Content-Type: application/json
 }
 ```
 
-#### Response Codes for PUT Requests
-
+**Response Codes for PUT Requests:**
 - **200 OK** – Payment method updated successfully.
 - **400 Bad Request** – Invalid request format.
 - **401 Unauthorized** – Invalid or missing token.
 - **404 Not Found** – Payment method not found.
 
----
+##### 4. Delete a Payment Method
 
-### 4.Delete a Payment Method
-
-#### Endpoint
-
+**Endpoint:**
 ```http
 DELETE  /api/users/payments/{paymentType}
 ```
 
-#### Description
-
+**Description:**
 Deletes a saved payment method based on its type.
 
-#### Request Example
-
+**Request Example:**
 ```
 DELETE /api/users/payments/upi HTTP/1.1
 Host: localhost:8080
 Authorization: Bearer <token>
 ```
 
-#### Response Codes
-
+**Response Codes:**
 - **200 OK** – Payment method deleted successfully.
 - **401 Unauthorized** – Invalid or missing token.
 - **404 Not Found** – Payment method not found.
 
-
 #### Notes
-
 - Each user can store one payment method per type.
 - `POST` and `PUT` requests must only include applicable fields; missing fields will be `null` in the response.
 - Masked details (card numbers, bank accounts) ensure security.
 - Bearer token authentication is mandatory for all requests.
 
-Here is the "Get User Addresses" section in the same format as your existing documentation:
-
----
-
-## IV.Address APIs
+### IV. Address APIs
 
 The Address API allows users to store, retrieve, update, and remove addresses associated with their account. It provides a structured way to handle user address data, ensuring consistency and security across various applications such as delivery services, billing, and user profiles.
 
 Users can add new addresses, fetch their saved addresses, modify existing ones, or delete them when no longer needed. Each operation requires authentication via a Bearer token, and the API returns appropriate HTTP status codes to indicate the success or failure of the request.
 
-
-### Authentication
+#### Authentication
 All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
 
-### Authorization Header Example
+**Authorization Header Example:**
 ```http
 Authorization: Bearer <token>
 ```
 
-## Request Parameters
+#### Request Parameters
 | Parameter       | Type   | Required | Description |
 |---------------|--------|----------|-------------|
 | `addressLabel` | String | Yes      | Unique label for the address (e.g., Home, Work). |
@@ -853,10 +813,9 @@ Authorization: Bearer <token>
 | `zipCode`      | String | Yes      | Postal code. |
 | `landmark`     | String | No       | Nearby landmark for easy identification (optional). |
 
----
-## Endpoints
+#### Endpoints
 
-### 1. Get All Addresses
+##### 1. Get All Addresses
 **Endpoint:**
 ```
 GET /api/users/addresses
@@ -885,7 +844,7 @@ Authorization: Bearer <token>
 ]
 ```
 
-### 2. Add a New Address
+##### 2. Add a New Address
 **Endpoint:**
 ```
 POST /api/users/addresses
@@ -925,7 +884,7 @@ Content-Type: application/json
 }
 ```
 
-### 3. Update an Address
+##### 3. Update an Address
 **Endpoint:**
 ```
 PUT /api/users/addresses/{addressLabel}
@@ -960,7 +919,7 @@ Content-Type: application/json
 }
 ```
 
-### 4. Delete an Address
+##### 4. Delete an Address
 **Endpoint:**
 ```
 DELETE /api/users/addresses/{addressLabel}
@@ -978,38 +937,34 @@ Authorization: Bearer <token>
 - **Status:** `200 OK`
 - **Body:** No response body.
 
-
-
-## Notes
+#### Notes
 - All requests require authentication using a Bearer Token.
 - For updating an address, only include fields that need to be changed.
 - `addressLine2` and `landmark` are optional fields across all requests.
 - `addressLabel` should be unique per user.
 
----
-## V.Health Conditions API
+### V. Health Conditions API
 
 The Health Conditions API provides endpoints to manage user health records, including retrieving, adding, updating, and deleting health conditions.
 
-### Authentication
+#### Authentication
 All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
 
-### Authorization Header Example
+**Authorization Header Example:**
 ```http
 Authorization: Bearer <token>
 ```
 
-## Request Parameters
+#### Request Parameters
 | Parameter         | Type   | Required | Description |
 |------------------|--------|----------|-------------|
 | `recordNo`       | Integer | Yes      | Unique identifier for the health record. |
 | `healthCondition` | String | Yes      | Name of the health condition. |
 | `description`     | String | No       | Additional details about the condition (optional). |
 
+#### Endpoints
 
-## Endpoints
-
-### 1. Get All Health Records
+##### 1. Get All Health Records
 **Endpoint:**
 ```
 GET /api/users/health-records
@@ -1034,7 +989,7 @@ Authorization: Bearer <token>
 ]
 ```
 
-### 2. Add a New Health Record
+##### 2. Add a New Health Record
 **Endpoint:**
 ```
 POST /api/users/health-records
@@ -1065,7 +1020,7 @@ Content-Type: application/json
 }
 ```
 
-### 3. Update a Health Record
+##### 3. Update a Health Record
 **Endpoint:**
 ```
 PUT /api/users/health-records/{recordNo}
@@ -1096,7 +1051,7 @@ Content-Type: application/json
 }
 ```
 
-### 4. Delete a Health Record
+##### 4. Delete a Health Record
 **Endpoint:**
 ```
 DELETE /api/users/health-records/{recordNo}
@@ -1114,35 +1069,33 @@ Authorization: Bearer <token>
 - **Status:** `200 OK`
 - **Body:** No response body.
 
-
-
-## Notes
+#### Notes
 - All requests require authentication using a Bearer Token.
 - For updating a health record, only include fields that need to be changed.
 - The `description` field is optional across all requests.
 
----
-## VI.Allergy Records APIs
+### VI. Allergy Records APIs
+
 The Allergy Records API provides endpoints to manage user allergy records, including retrieving, adding, updating, and deleting records.
 
-### Authentication
+#### Authentication
 All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
 
-### Authorization Header Example
+**Authorization Header Example:**
 ```http
 Authorization: Bearer <token>
 ```
 
-## Request Parameters
+#### Request Parameters
 | Parameter       | Type   | Required | Description |
 |---------------|--------|----------|-------------|
 | `recordNo`    | Integer | Yes      | Unique identifier for the allergy record. |
 | `allergies`   | String  | Yes      | The name(s) of the allergens. |
 | `description` | String  | No       | Additional details about the allergy (optional). |
 
-## Endpoints
+#### Endpoints
 
-### 1. Get All Allergy Records
+##### 1. Get All Allergy Records
 **Endpoint:**
 ```
 GET /api/users/allergy-records
@@ -1167,9 +1120,7 @@ Authorization: Bearer <token>
 ]
 ```
 
----
-
-### 2. Add a New Allergy Record
+##### 2. Add a New Allergy Record
 **Endpoint:**
 ```
 POST /api/users/allergy-records
@@ -1200,7 +1151,7 @@ Content-Type: application/json
 }
 ```
 
-### 3. Update an Allergy Record
+##### 3. Update an Allergy Record
 **Endpoint:**
 ```
 PUT /api/users/allergy-records/{recordNo}
@@ -1230,7 +1181,7 @@ Content-Type: application/json
 }
 ```
 
-### 4. Delete an Allergy Record
+##### 4. Delete an Allergy Record
 **Endpoint:**
 ```
 DELETE /api/users/allergy-records/{recordNo}
@@ -1248,27 +1199,24 @@ Authorization: Bearer <token>
 - **Status:** `200 OK`
 - **Body:** No response body.
 
-
-
-## Notes
+#### Notes
 - All requests require authentication using a Bearer Token.
 - For updating an allergy record, only include fields that need to be changed.
 - The `description` field is optional across all requests.
 
-
-## VII.Dependents APIs
+### VII. Dependents APIs
 
 The Dependents API provides endpoints to manage user dependents, including retrieving, adding, updating, and deleting records.
 
-### Authentication
+#### Authentication
 All requests require authentication via a **Bearer Token** in the request header. Unauthorized requests will be denied.
 
-### Authorization Header Example
+**Authorization Header Example:**
 ```http
 Authorization: Bearer <token>
 ```
 
-## Request Parameters
+#### Request Parameters
 | Parameter       | Type   | Required | Description |
 |---------------|--------|----------|-------------|
 | `fullName`    | String  | Yes      | Full name of the dependent. If it contains spaces, replace them with `%20` in the URL. |
@@ -1278,10 +1226,9 @@ Authorization: Bearer <token>
 | `emailAddress` | String  | No       | Email address of the dependent (optional). |
 | `emergencySosContact` | Boolean | No | Indicates if this dependent is an emergency contact (optional). |
 
+#### Endpoints
 
-## Endpoints
-
-### 1. Get All Dependents
+##### 1. Get All Dependents
 **Endpoint:**
 ```
 GET /api/users/dependents
@@ -1309,8 +1256,7 @@ Authorization: Bearer <token>
 ]
 ```
 
-
-### 2. Add a New Dependent
+##### 2. Add a New Dependent
 **Endpoint:**
 ```
 POST /api/users/dependents
@@ -1348,7 +1294,7 @@ Content-Type: application/json
 }
 ```
 
-### 3. Update a Dependent
+##### 3. Update a Dependent
 **Endpoint:**
 ```
 PUT /api/users/dependents/{fullName}
@@ -1383,7 +1329,7 @@ Content-Type: application/json
 }
 ```
 
-### 4. Delete a Dependent
+##### 4. Delete a Dependent
 **Endpoint:**
 ```
 DELETE /api/users/dependents/{fullName}
@@ -1403,16 +1349,7 @@ Authorization: Bearer <token>
 - **Status:** `200 OK`
 - **Body:** No response body.
 
-
-## Notes
+#### Notes
 - All requests require authentication using a Bearer Token.
 - For updating a dependent, only include fields that need to be changed.
 - Spaces in `fullName` should be replaced with `%20` in the request URL to ensure proper encoding.
-
----
-
-
-
-
-
-
