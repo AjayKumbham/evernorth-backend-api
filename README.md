@@ -10,8 +10,7 @@ This repository contains the backend API developed as part of a real-time case s
 - **Technologies:** Spring Boot, MySQL, JWT 
 - **Purpose:** Practical experience in enterprise backend development
 
-**Note:** This project is developed for learning purposes only and does not represent an official Evernorth product.
-
+**Note:** This project is developed for learning purposes only and does not represent an official Evernorth product.The live version of this documentation is available [here](https://ajaykumbham.github.io/backend-api-docs/).
 ## API Documentation
 
 ### I. Authentication APIs
