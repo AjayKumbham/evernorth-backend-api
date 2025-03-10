@@ -1,5 +1,18 @@
 # Evernorth Backend API Documentation
----
+---  
+## Project Overview  
+
+This repository contains the backend API developed as part of a real-time case study provided by Evernorth. The project was designed to simulate an industry-level backend system using spring boot, implementing best practices in API development, security, and scalability using Spring Boot.  
+
+### Project Details  
+- **Company:** Evernorth (Provided as a real-time case study)  
+- **Role:** Team Leader & Backend Developer  
+- **Technologies:** Spring Boot, MySQL, JWT 
+- **Purpose:** Practical experience in enterprise backend development  
+
+**Note:** This project is developed for learning purposes only and does not represent an official Evernorth product.  
+
+---  
 
 ## I.Authentication APIs
 
