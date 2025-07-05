@@ -4,15 +4,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.auth.dto.AuthenticationRequest;
 import com.auth.dto.AuthenticationResponse;
 import com.auth.dto.LoginRequest;
+import com.auth.dto.LogoutResponse;
 import com.auth.dto.RegisterRequest;
 import com.auth.service.AuthenticationService;
+import java.time.LocalDateTime;
 
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
@@ -33,8 +36,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/verify-email")
-    public ResponseEntity<AuthenticationResponse> verifyEmail(@Valid @RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(authenticationService.verifyEmail(request));
+    public ResponseEntity<AuthenticationResponse> verifyEmail(
+            @Valid @RequestBody AuthenticationRequest request,
+            HttpServletResponse response) {
+        return ResponseEntity.ok(authenticationService.verifyEmail(request, response));
     }
 
     @PostMapping("/login/send-otp")
@@ -44,13 +49,20 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login/verify-otp")
-    public ResponseEntity<AuthenticationResponse> verifyOtp(@Valid @RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(authenticationService.verifyOtp(request));
+    public ResponseEntity<AuthenticationResponse> verifyOtp(
+            @Valid @RequestBody AuthenticationRequest request,
+            HttpServletResponse response) {
+        return ResponseEntity.ok(authenticationService.verifyOtp(request, response));
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
-        authenticationService.logout(token.substring(7));
-        return ResponseEntity.ok("Logged out successfully");
+    public ResponseEntity<LogoutResponse> logout(
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        authenticationService.logout(request, response);
+        return ResponseEntity.ok(LogoutResponse.builder()
+                .message("Logged out successfully")
+                .timestamp(LocalDateTime.now())
+                .build());
     }
 }
