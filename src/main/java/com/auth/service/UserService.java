@@ -15,8 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +25,7 @@ public class UserService {
     private final MemberRepository memberRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
+    private final SecureRandom secureRandom = new SecureRandom();
 
     public UserProfileResponse getCurrentUserProfile() {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -113,7 +114,7 @@ public class UserService {
     }
 
     private String generateOtp() {
-        return String.format("%06d", new Random().nextInt(1000000));
+        return String.format("%06d", secureRandom.nextInt(1000000));
     }
 
     private UserProfileResponse mapToUserProfileResponse(Member member) {

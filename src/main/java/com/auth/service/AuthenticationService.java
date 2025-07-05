@@ -15,8 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +29,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final TokenBlacklistService tokenBlacklistService;
     private final MemberIdGenerator memberIdGenerator;
+    private final SecureRandom secureRandom = new SecureRandom();
 
     @Transactional
     public void register(RegisterRequest request) throws MessagingException {
@@ -89,10 +90,10 @@ public class AuthenticationService {
             System.err.println("Failed to send welcome email: " + e.getMessage());
         }
 
-        // Generate and return token immediately
+        // Generate token but don't return it in response body
         String token = jwtService.generateToken(memberId);
         return AuthenticationResponse.builder()
-                .token(token)
+                .message("Registration successful")
                 .build();
     }
 
@@ -127,10 +128,10 @@ public class AuthenticationService {
         member.setOtpExpiryTime(null);
         memberRepository.save(member);
 
-        // Generate and return token immediately
+        // Generate token but don't return it in response body
         String token = jwtService.generateToken(member.getMemberId());
         return AuthenticationResponse.builder()
-                .token(token)
+                .message("Login successful")
                 .build();
     }
 
@@ -139,7 +140,13 @@ public class AuthenticationService {
         tokenBlacklistService.blacklistToken(token, LocalDateTime.now().plusDays(1));
     }
 
+    public String getMemberIdFromEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .map(Member::getMemberId)
+                .orElseThrow(() -> new ResourceNotFoundException("Member not found"));
+    }
+
     private String generateOtp() {
-        return String.format("%06d", new Random().nextInt(1000000));
+        return String.format("%06d", secureRandom.nextInt(1000000));
     }
 }

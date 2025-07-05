@@ -63,9 +63,9 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         
         // Use environment-based origins instead of wildcard
-        configuration.setAllowedOrigins(corsProperties.getAllowedOrigins());
-        configuration.setAllowedMethods(corsProperties.getAllowedMethods());
-        configuration.setAllowedHeaders(corsProperties.getAllowedHeaders());
+        configuration.setAllowedOrigins(corsProperties.getAllowedOriginsList());
+        configuration.setAllowedMethods(corsProperties.getAllowedMethodsList());
+        configuration.setAllowedHeaders(corsProperties.getAllowedHeadersList());
         configuration.setExposedHeaders(List.of("Authorization"));
         configuration.setAllowCredentials(corsProperties.isAllowCredentials());
         configuration.setMaxAge(corsProperties.getMaxAge());

@@ -22,6 +22,7 @@ import io.jsonwebtoken.security.SignatureException;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
+import com.auth.exception.RateLimitExceededException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -243,5 +244,21 @@ public class GlobalExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(RateLimitExceededException.class)
+    public ResponseEntity<ApiError> handleRateLimitExceededException(
+            RateLimitExceededException ex,
+            HttpServletRequest request
+    ) {
+        ApiError apiError = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.TOO_MANY_REQUESTS.value())
+                .error(HttpStatus.TOO_MANY_REQUESTS.getReasonPhrase())
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+
+        return new ResponseEntity<>(apiError, HttpStatus.TOO_MANY_REQUESTS);
     }
 }

@@ -11,6 +11,76 @@ This repository contains the backend API developed as part of a real-time case s
 - **Purpose:** Practical experience in enterprise backend development
 
 **Note:** This project is developed for learning purposes only and does not represent an official Evernorth product.The live version of this documentation is available [here](https://ajaykumbham.github.io/backend-api-docs/).
+
+## Security Features
+
+This application implements comprehensive security measures to protect against common vulnerabilities:
+
+### ✅ Implemented Security Features
+
+1. **JWT Token Security**
+   - Tokens stored in HTTP-only, secure cookies (XSS protection)
+   - Token blacklisting for secure logout
+   - Automatic token cleanup on expiration
+
+2. **Rate Limiting**
+   - Redis-based rate limiting for authentication endpoints
+   - 100 requests per 15 minutes per IP address
+   - Protection against brute force attacks
+
+3. **CSRF Protection**
+   - CSRF tokens enabled with CookieCsrfTokenRepository
+   - Properly configured for stateless JWT authentication
+
+4. **CORS Security**
+   - Environment-based CORS configuration
+   - No wildcard origins allowed
+   - Secure cookie settings
+
+5. **OTP Security**
+   - Cryptographically secure random number generation (SecureRandom)
+   - OTPs hashed before database storage
+   - Short expiration times (1-5 minutes)
+
+6. **Error Handling**
+   - No sensitive information in error responses
+   - Generic error messages in production
+   - Proper HTTP status codes
+
+7. **Input Validation**
+   - Comprehensive request validation
+   - SQL injection protection through JPA
+   - XSS protection through proper encoding
+
+### 🔧 Configuration Required
+
+Before running the application, you must configure the following environment variables:
+
+1. **Copy the example environment file:**
+   ```bash
+   cp env.example .env
+   ```
+
+2. **Configure the required environment variables:**
+   - `DB_USERNAME` and `DB_PASSWORD` - Database credentials
+   - `MAIL_USERNAME` and `MAIL_PASSWORD` - Email service credentials
+   - `JWT_SECRET_KEY` - Strong secret key (at least 256 bits)
+   - `CORS_ALLOWED_ORIGINS` - Comma-separated list of allowed origins
+
+3. **Generate a secure JWT secret key:**
+   ```bash
+   # Generate a 256-bit (32-byte) base64-encoded secret
+   openssl rand -base64 32
+   ```
+
+### 🚨 Security Notes
+
+- **Never commit real credentials to version control**
+- **Use strong, unique passwords for all services**
+- **Enable HTTPS in production**
+- **Regularly rotate JWT secret keys**
+- **Monitor rate limiting logs for suspicious activity**
+
 ## API Documentation
 
 ### I. Authentication APIs
@@ -99,11 +169,11 @@ Content-Type: application/json
 **Response Example:**
 ```json
 {
-    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKOTAwMSIsImlhdCI6MTczODQ3MzcwNiwiZXhwIjoxNzM4NTYwMTA2fQ.OLYEJtT8lXLiqAzxmNfBjQ4m7Tr3P289LcusvLjOt-I"
+    "message": "Registration successful"
 }
 ```
 
-**Note:** The issued token must be used for authenticated requests.
+**Note:** The JWT token is automatically set as an HTTP-only cookie. No manual token handling required.
 
 #### Login Process (2-Step)
 
@@ -179,11 +249,11 @@ Content-Type: application/json
 **Response Example:**
 ```json
 {
-    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKOTAwMSIsImlhdCI6MTczODQyMDY3OCwiZXhwIjoxNzM4NTA3MDc4fQ.YwEjcQuBGJpl-DshR1-ffM5iiVcqu6Il_cfchuiT_Ww"
+    "message": "Login successful"
 }
 ```
 
-**Note:** The token returned is a JWT token and is valid for exactly **24 hours (1 day)**. This token must be included in the Authorization header for accessing protected resources.
+**Note:** The JWT token is automatically set as an HTTP-only cookie and is valid for exactly **24 hours (1 day)**. The browser will automatically include the token in subsequent requests.
 
 ##### Logout User
 
