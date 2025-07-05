@@ -22,9 +22,19 @@ import io.jsonwebtoken.security.SignatureException;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
+import com.auth.config.ErrorHandlingProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private final ErrorHandlingProperties errorHandlingProperties;
+
+    public GlobalExceptionHandler(ErrorHandlingProperties errorHandlingProperties) {
+        this.errorHandlingProperties = errorHandlingProperties;
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiError> handleResourceNotFoundException(
@@ -234,14 +244,19 @@ public class GlobalExceptionHandler {
             Exception ex,
             HttpServletRequest request
     ) {
+        if (errorHandlingProperties.isLogStackTraces()) {
+            logger.error("Unhandled exception occurred", ex);
+        } else {
+            logger.error("Unhandled exception: {}", ex.getMessage());
+        }
+        String message = errorHandlingProperties.isShowDetails() ? ex.getMessage() : errorHandlingProperties.getErrorMessages().getOrDefault("general", "An unexpected error occurred");
         ApiError apiError = ApiError.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
-                .message("An unexpected error occurred")
+                .message(message)
                 .path(request.getRequestURI())
                 .build();
-
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
