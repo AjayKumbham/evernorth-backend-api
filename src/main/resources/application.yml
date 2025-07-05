@@ -30,3 +30,20 @@ application:
       expiration: 86400000 # a day
     otp:
       expiration: 60000 # 1 minute
+  error-handling:
+    show-details: false
+    log-stack-traces: true
+  cors:
+    allowed-origins:
+      - http://localhost:3000
+      - http://localhost:8080
+    allowed-methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - OPTIONS
+    allowed-headers:
+      - "*"
+    allow-credentials: true
+    max-age: 3600
