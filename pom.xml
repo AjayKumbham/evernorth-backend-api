@@ -69,10 +69,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-<<<<<<< Updated upstream
-=======
-        
->>>>>>> Stashed changes
         <!-- Test Dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
